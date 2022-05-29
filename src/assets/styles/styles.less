@@ -2,18 +2,23 @@
 @import "./scrollbar";
 @import "./typography";
 @import "./alignment";
+@import "./page-decoration";
 
 #root {
     display: flex;
     flex-direction: column;
     height: 100%;
+    background-color: #F1F4F2;
 }
 
 body {
     font-family: 'Rubik', sans-serif;
     font-size: 14px;
     line-height: 1.2;
-    color: #17252A;
+}
+
+.page__wrapper {
+    z-index: 5;
 }
 
 .container {
