@@ -1,0 +1,24 @@
+@textAligns: left, center, right;
+each(@textAligns, {
+    .text-align-@{value} {
+        text-align: @value;
+    }
+});
+
+@fontWeights: {
+    regular: 400;
+    medium: 500;
+    semi-bold: 600;
+}
+each(@fontWeights, {
+    .font-weight-@{key} {
+        font-weight: @value;
+    }
+});
+
+@fontSizes: 12px, 14px, 16px, 18px, 20px, 22px, 24px;
+each(@fontSizes, {
+    .font-size-@{value} {
+        font-size: @value;
+    }
+})

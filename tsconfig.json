@@ -1,0 +1,41 @@
+{
+    "compilerOptions": {
+        "target": "es3",
+        "module": "commonjs",
+        "sourceMap": true,
+        "outDir": "./compile",
+        "removeComments": true,
+
+        /* Strict Type-Checking Options */
+        "strict": true,
+        "allowSyntheticDefaultImports": true,
+        "noImplicitReturns": true,
+        "noImplicitAny": false,
+        "noImplicitThis": false,
+        "allowJs": true,
+
+        /* Module Resolution Options */
+        "moduleResolution": "node",
+        "lib": [
+            "es2019",
+            "DOM"
+        ],
+        "jsx": "react",
+        "baseUrl": "./src",
+        "paths": {
+            "@api": ["api"],
+            "@hooks": ["app/hooks"],
+            "@assets/*": ["assets/*"],
+            "@components/*": ["components/*"],
+            "@pages/*": ["pages/*"],
+            "@redux-actions/*": ["store/actions/*"],
+            "@redux-store": ["store/index"],
+            "@interfaces/*": ["interfaces/*"],
+            "@utils/*": ["utils/*"],
+        }
+    },
+    "include": [
+        "./src/**/*",
+        ".d.ts"
+    ]
+}
