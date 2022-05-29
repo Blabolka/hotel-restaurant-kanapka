@@ -1,0 +1,39 @@
+.page-background-decoration {
+    z-index: 1;
+
+    &__top-left {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    &__bottom-left {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+
+    &__bottom-right {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+}
+
+@media screen and (orientation: portrait) {
+    .page-background-decoration {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1299px) {
+    .page-background-decoration {
+        display: none;
+    }
+}
+
+@media screen and (max-height: 699px) {
+    .page-background-decoration {
+        display: none;
+    }
+}
