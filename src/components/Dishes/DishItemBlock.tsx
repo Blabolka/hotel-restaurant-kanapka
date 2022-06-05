@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Stack } from '@mui/material'
 
-import TestImage from '@assets/img/image.png'
+import TestImage from '@assets/img/test-dish-image.png'
 
 interface DishInfo {
     imagePath: string
@@ -15,7 +15,7 @@ interface DishBlockItemProps {
     dishInfo: DishInfo
 }
 
-const DishBlockItem = ({ dishInfo }: DishBlockItemProps) => {
+const DishItemBlock = ({ dishInfo }: DishBlockItemProps) => {
     return (
         <Box
             sx={{
@@ -44,4 +44,4 @@ const DishBlockItem = ({ dishInfo }: DishBlockItemProps) => {
     )
 }
 
-export default DishBlockItem
+export default DishItemBlock
