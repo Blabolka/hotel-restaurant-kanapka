@@ -7,7 +7,7 @@ import DishItemsGrid from './DishItemsGrid/DishItemsGrid'
 
 const MainPageCenterBlock = () => {
     return (
-        <Box sx={{ width: 760 }}>
+        <Box>
             <DishSearchBar />
             <DishSortingSelect />
             <DishItemsGrid />
