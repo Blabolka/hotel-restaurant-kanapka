@@ -36,6 +36,7 @@
         "core-js": "^3.21.1",
         "css-loader": "^6.7.0",
         "dotenv-webpack": "^7.1.0",
+        "file-loader": "^6.2.0",
         "html-webpack-plugin": "^5.5.0",
         "less": "^4.1.2",
         "less-loader": "^10.2.0",
