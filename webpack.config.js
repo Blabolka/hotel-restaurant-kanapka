@@ -96,7 +96,7 @@ module.exports = (env, arguments) => {
         plugins: [
             new HtmlWebpackPlugin({ template: path.join(__dirname, 'public', 'index.html') }),
             new MiniCssExtractPlugin({
-                filename: '[name].[contentHash].min.css'
+                filename: '[name].[contenthash].min.css'
             }),
             new CleanWebpackPlugin(),
             new Dotenv(),
