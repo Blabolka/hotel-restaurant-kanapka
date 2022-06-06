@@ -34,7 +34,7 @@ const DishItemBlock = ({ dishInfo }: DishBlockItemProps) => {
                         ₴{dishInfo.price.toFixed(1)}
                     </span>
                     <IconButtonCustom aria-label="add-dish">
-                        <img src={AddDishIcon} alt="Add Dish Icon" />
+                        <img draggable={false} src={AddDishIcon} alt="Add Dish Icon" />
                     </IconButtonCustom>
                 </Stack>
             </Stack>
