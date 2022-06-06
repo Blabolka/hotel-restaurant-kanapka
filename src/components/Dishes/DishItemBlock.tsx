@@ -1,16 +1,12 @@
 import React from 'react'
+
 import { Box, Stack } from '@mui/material'
+import IconButtonCustom from '@components/Overrides/IconButtonCustom'
 
 import TestImage from '@assets/img/test-dish-image.png'
+import AddDishIcon from '@assets/img/add-dish-icon.svg'
 
-interface DishInfo {
-    imagePath: string
-    name: string
-    description: string
-    weight: number
-    price: number
-}
-
+import { DishInfo } from './dishItemUtils'
 interface DishBlockItemProps {
     dishInfo: DishInfo
 }
@@ -37,7 +33,9 @@ const DishItemBlock = ({ dishInfo }: DishBlockItemProps) => {
                     <span className="color-primary font-size-20px font-weight-medium">
                         ₴{dishInfo.price.toFixed(1)}
                     </span>
-                    <button>+</button>
+                    <IconButtonCustom aria-label="add-dish">
+                        <img src={AddDishIcon} alt="Add Dish Icon" />
+                    </IconButtonCustom>
                 </Stack>
             </Stack>
         </Box>
