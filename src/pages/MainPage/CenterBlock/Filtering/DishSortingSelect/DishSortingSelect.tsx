@@ -6,7 +6,7 @@ import { setSortingSelect } from '@redux-actions/mainPageActions'
 import { FormControl, MenuItem } from '@mui/material'
 import SelectCustom from '@components/Overrides/SelectCustom'
 
-import { SORTING_SELECT_VALUES } from './dishSortingSelectUtils'
+import { sortingMenuItems } from './dishSortingSelectUtils'
 
 export default function DishSortingSelect() {
     const dispatch = useAppDispatch()
@@ -30,14 +30,3 @@ export default function DishSortingSelect() {
         </FormControl>
     )
 }
-
-const sortingMenuItems = [
-    {
-        value: SORTING_SELECT_VALUES.ASC,
-        name: 'Від дешевих до дорогих',
-    },
-    {
-        value: SORTING_SELECT_VALUES.DESC,
-        name: 'Від дорогих до дешевих',
-    },
-]
