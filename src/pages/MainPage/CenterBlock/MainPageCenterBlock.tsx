@@ -9,7 +9,7 @@ import DishPagination from './Filtering/DishPagination/DishPagination'
 const MainPageCenterBlock = () => {
     return (
         <Stack direction="column" gap="30px" alignItems="center">
-            <Stack direction="column" gap="20px">
+            <Stack direction="column" gap="20px" minWidth={760}>
                 <Stack direction="row" gap="20px">
                     <DishSearchBar />
                     <DishSortingSelect />
