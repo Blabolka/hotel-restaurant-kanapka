@@ -23,8 +23,7 @@
         "jsx": "react",
         "baseUrl": "./src",
         "paths": {
-            "@api": ["api"],
-            "@hooks": ["app/hooks"],
+            "@api/*": ["api/*"],
             "@assets/*": ["assets/*"],
             "@components/*": ["components/*"],
             "@pages/*": ["pages/*"],
@@ -32,6 +31,7 @@
             "@redux-store": ["store/index"],
             "@interfaces/*": ["interfaces/*"],
             "@utils/*": ["utils/*"],
+            "@hooks": ["utils/hooks/index"]
         }
     },
     "include": [

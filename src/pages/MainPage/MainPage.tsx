@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
+import { useAppDispatch } from '@hooks'
+import { getDishesAsync } from '@redux-actions/mainPageActions'
 
 import CenterBlock from './CenterBlock/MainPageCenterBlock'
 import { createStyles, makeStyles } from '@mui/styles'
@@ -7,6 +10,11 @@ import Menu from '@components/Menu/Menu'
 
 export default function MainPage() {
     const classes = useStyles()
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(getDishesAsync())
+    }, [])
 
     return (
         <Box className={classes.root}>
