@@ -1,0 +1,1 @@
+export const PAGINATION_SIZE_PER_PAGE = 6

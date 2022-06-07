@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { useAppDispatch, useAppSelector } from '@hooks'
-import { setSearch } from '@redux-actions/mainPageActions'
+import { useAppDispatch, useAppSelector, useDebounce, useDidMountEffect } from '@hooks'
+import { setSearch, getDishesAsync, resetPagination } from '@redux-actions/mainPageActions'
 
 import TextFieldCustom from '@components/Overrides/TextFieldCustom'
 
@@ -15,6 +15,14 @@ const DishSearchBar = () => {
     const onInputChange = (event) => {
         dispatch(setSearch(event.target.value))
     }
+
+    const debouncedSearch = useDebounce(searchValue, 300)
+    useDidMountEffect(() => {
+        if (typeof debouncedSearch === 'string') {
+            dispatch(resetPagination())
+            dispatch(getDishesAsync())
+        }
+    }, [debouncedSearch])
 
     return (
         <TextFieldCustom

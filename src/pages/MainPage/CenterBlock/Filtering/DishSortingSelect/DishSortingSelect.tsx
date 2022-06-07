@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { setSortingSelect } from '@redux-actions/mainPageActions'
+import { setSortingSelect, resetPagination, getDishesAsync } from '@redux-actions/mainPageActions'
 
 import { FormControl, MenuItem } from '@mui/material'
 import SelectCustom from '@components/Overrides/SelectCustom'
@@ -14,6 +14,8 @@ export default function DishSortingSelect() {
 
     const onSelectChange = (event) => {
         dispatch(setSortingSelect(event.target.value))
+        dispatch(resetPagination())
+        dispatch(getDishesAsync())
     }
 
     return (

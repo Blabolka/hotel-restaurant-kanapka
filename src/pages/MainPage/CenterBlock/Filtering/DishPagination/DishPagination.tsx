@@ -1,21 +1,24 @@
 import React from 'react'
 
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { setPagination } from '@redux-actions/mainPageActions'
+import { setPagination, getDishesAsync } from '@redux-actions/mainPageActions'
 
 import PaginationCustom from '@components/Overrides/PaginationCustom'
 
 const DishPagination = () => {
     const dispatch = useAppDispatch()
-    const currentPage = useAppSelector((state) => state.mainPage.pagination.page)
+    const pagination = useAppSelector((state) => state.mainPage.pagination)
 
     const onPaginationPageChange = (event, newPage) => {
-        if (newPage !== currentPage) {
-            dispatch(setPagination(newPage))
+        if (newPage !== pagination.page) {
+            dispatch(setPagination({ ...pagination, page: newPage }))
+            dispatch(getDishesAsync())
         }
     }
 
-    return <PaginationCustom page={currentPage} count={10} onChange={onPaginationPageChange} />
+    return pagination.totalPages > 0 ? (
+        <PaginationCustom page={pagination.page} count={pagination.totalPages} onChange={onPaginationPageChange} />
+    ) : null
 }
 
 export default DishPagination
