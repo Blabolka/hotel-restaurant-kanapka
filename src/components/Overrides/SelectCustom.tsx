@@ -23,7 +23,7 @@ const useStyles = makeStyles(() =>
             height: '40px',
             borderRadius: '20px',
             backgroundColor: '#FFFFFF',
-            padding: '11px 0 11px 24px',
+            padding: '11px 0 11px 12px',
 
             '& .MuiOutlinedInput-input': {
                 fontSize: '14px',
