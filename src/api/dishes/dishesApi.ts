@@ -4,11 +4,15 @@ import { IGetAllDishesPaginatedParams, IGetAllDishesPaginatedResponse } from './
 export const getDishesApi = (axios) => {
     const getAllDishesPaginated = (
         params: IGetAllDishesPaginatedParams,
-    ): Promise<AxiosResponse<IGetAllDishesPaginatedResponse>> => {
-        return axios.get('/dishes', { params })
-    }
+    ): Promise<AxiosResponse<IGetAllDishesPaginatedResponse>> => axios.get('/dishes', { params })
+
+    const getDishesByTypePaginated = (
+        dishType: string,
+        params: IGetAllDishesPaginatedParams,
+    ): Promise<AxiosResponse<IGetAllDishesPaginatedResponse>> => axios.get(`/dishes/${dishType}`, { params })
 
     return {
         getAllDishesPaginated,
+        getDishesByTypePaginated,
     }
 }

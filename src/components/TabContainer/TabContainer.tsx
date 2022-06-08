@@ -1,15 +1,21 @@
 import React from 'react'
 import { Box, Tab, Tabs } from '@mui/material'
 import { createStyles, makeStyles } from '@mui/styles'
-import { tabItems } from '@components/TabContainer/tabContainerUtils'
+import { dishTypes, tabItems } from '@components/TabContainer/tabContainerUtils'
+import { getDishesAsync, resetPagination, setDishesType } from '@redux-actions/mainPageActions'
+import { useAppDispatch } from '@hooks'
 
 export default function TabContainer() {
     const classes = useStyles()
+    const dispatch = useAppDispatch()
 
     const [value, setValue] = React.useState(0)
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue)
+    const handleChange = (event: React.SyntheticEvent, value: number) => {
+        setValue(value)
+        dispatch(setDishesType(dishTypes[value]))
+        dispatch(resetPagination())
+        dispatch(getDishesAsync())
     }
 
     return (
