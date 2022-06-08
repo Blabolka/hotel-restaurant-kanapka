@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
 import { useAppDispatch } from '@hooks'
-import { getDishesAsync, resetPagination, setDishesType } from '@redux-actions/mainPageActions'
+import { getDishesAsync, getCartDishesFromLocalStorageAsync, resetPagination, setDishesType } from '@redux-actions/mainPageActions'
 
-import CenterBlock from './CenterBlock/MainPageCenterBlock'
+import MainPageCenterBlock from './CenterBlock/MainPageCenterBlock'
+import MainPageCartRightBlock from './CartRightBlock/MainPageCartRightBlock'
+
 import { createStyles, makeStyles } from '@mui/styles'
 import { Box } from '@mui/material'
 import NavigationPanel from '@components/NavigationPanel/NavigationPanel'
@@ -18,6 +20,7 @@ export default function MainPage() {
 
     useEffect(() => {
         dispatch(getDishesAsync())
+        dispatch(getCartDishesFromLocalStorageAsync())
     }, [])
 
     const onTabChange = (event: React.SyntheticEvent, value: number) => {
@@ -33,8 +36,8 @@ export default function MainPage() {
         <Box className={classes.root}>
             <Box className={classes.container}>
                 <NavigationPanel title="Меню" items={tabItems} openedTab={openedTab} onTabChange={onTabChange} />
-                <CenterBlock />
-                <Box className={classes.orderContainer}>Right side</Box>
+                <MainPageCenterBlock />
+                <MainPageCartRightBlock />
             </Box>
         </Box>
     )
@@ -49,11 +52,6 @@ const useStyles = makeStyles(() =>
         container: {
             display: 'flex',
             gap: '20px',
-        },
-        orderContainer: {
-            minWidth: '360px',
-            background: 'white',
-            borderRadius: '30px',
         },
     }),
 )

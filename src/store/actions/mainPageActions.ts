@@ -34,6 +34,28 @@ export const setDishes = (state: DishInfo[]) => ({
     payload: state,
 })
 
+export const getCartDishesFromLocalStorageAsync = () => {
+    return (dispatch, getState) => {
+        const { mainPage } = getState()
+        const stringOfDishIds = window.localStorage.getItem('cart-selected-dishes')
+
+        if (stringOfDishIds) {
+            const dishIds = JSON.parse(stringOfDishIds)
+
+            if (Array.isArray(dishIds) && dishIds.length) {
+                api.dishes.getDishesByIdList(dishIds).then((requestData) => {
+                    dispatch(setCart({ ...mainPage.cart, dishes: requestData.data }))
+                })
+            }
+        }
+    }
+}
+
+export const setCart = (state: DishInfo[]) => ({
+    type: MainPageTypes.SET_CART,
+    payload: state,
+})
+
 export const resetPagination = () => ({
     type: MainPageTypes.RESET_PAGINATION,
 })

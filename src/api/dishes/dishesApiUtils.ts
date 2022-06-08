@@ -8,7 +8,10 @@ export interface IGetAllDishesPaginatedParams {
     sort: SORTING_SELECT_VALUES
 }
 
-export interface IGetAllDishesPaginatedResponse {
+export interface IGetDishesResponse {
     content: DishInfo[]
+}
+
+export interface IGetAllDishesPaginatedResponse extends IGetDishesResponse {
     totalPages: number
 }

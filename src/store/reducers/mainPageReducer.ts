@@ -1,10 +1,11 @@
 import { MainPageTypes } from '../types'
 
-import { DishInfo } from '@components/Dishes/dishItemUtils'
+import { DishInfo, DishCartInfo } from '@components/Dishes/dishItemUtils'
 import { SORTING_SELECT_VALUES } from '@pages/MainPage/CenterBlock/Filtering/DishSortingSelect/dishSortingSelectUtils'
 
 interface initialStateTypes {
     dishes: DishInfo[]
+    cart: { dishes: DishCartInfo[]; deliveryDate: Date }
     pagination: { page: number; totalPages: number }
     search: string
     sortingSelectValue: SORTING_SELECT_VALUES
@@ -13,6 +14,10 @@ interface initialStateTypes {
 
 const initialState: initialStateTypes = {
     dishes: [],
+    cart: {
+        dishes: [],
+        deliveryDate: new Date(),
+    },
     pagination: {
         page: 1,
         totalPages: 1,
@@ -26,6 +31,12 @@ const paginationReducer = (state = initialState, action) => {
     switch (action.type) {
         case MainPageTypes.SET_DISHES: {
             return { ...state, dishes: action.payload }
+        }
+
+        case MainPageTypes.SET_CART: {
+            const dishIds = action.payload.dishes.map((dish) => dish.id)
+            window.localStorage.setItem('cart-selected-dishes', JSON.stringify(dishIds))
+            return { ...state, cart: action.payload }
         }
 
         case MainPageTypes.SET_PAGINATION: {
