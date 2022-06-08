@@ -34,8 +34,8 @@ const paginationReducer = (state = initialState, action) => {
         }
 
         case MainPageTypes.SET_CART: {
-            const dishIds = action.payload.dishes.map((dish) => dish.id)
-            window.localStorage.setItem('cart-selected-dishes', JSON.stringify(dishIds))
+            const dishes = action.payload.dishes.map((dish) => ({ id: dish.id, count: dish.count }))
+            window.localStorage.setItem('cart-selected-dishes', JSON.stringify(dishes))
             return { ...state, cart: action.payload }
         }
 
