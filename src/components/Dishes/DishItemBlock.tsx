@@ -10,9 +10,10 @@ import AddDishIcon from '@assets/img/add-dish-icon.svg'
 import { DishInfo } from './dishItemUtils'
 interface DishBlockItemProps {
     dishInfo: DishInfo
+    onAddButtonClick?: (id: string) => void
 }
 
-export default function DishItemBlock({ dishInfo }: DishBlockItemProps) {
+export default function DishItemBlock({ dishInfo, onAddButtonClick = () => false }: DishBlockItemProps) {
     const classes = useStyles()
 
     return (
@@ -41,7 +42,7 @@ export default function DishItemBlock({ dishInfo }: DishBlockItemProps) {
                     <span className="color-primary font-size-20px font-weight-medium">
                         ₴{dishInfo.price.toFixed(1)}
                     </span>
-                    <IconButtonCustom aria-label="add-dish">
+                    <IconButtonCustom aria-label="add-dish" onClick={() => onAddButtonClick(dishInfo.id)}>
                         <img draggable={false} src={AddDishIcon} alt="Add Dish Icon" />
                     </IconButtonCustom>
                 </Stack>
