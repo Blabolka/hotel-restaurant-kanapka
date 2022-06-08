@@ -1,15 +1,21 @@
 import React from 'react'
 import { Box, Tab, Tabs } from '@mui/material'
 import { createStyles, makeStyles } from '@mui/styles'
-import { tabItems } from '@components/TabContainer/tabContainerUtils'
+import { dishTypes, tabItems } from '@components/TabContainer/tabContainerUtils'
+import { getDishesAsync, resetPagination, setDishesType } from '@redux-actions/mainPageActions'
+import { useAppDispatch } from '@hooks'
 
 export default function TabContainer() {
     const classes = useStyles()
+    const dispatch = useAppDispatch()
 
     const [value, setValue] = React.useState(0)
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue)
+    const handleChange = (event: React.SyntheticEvent, value: number) => {
+        setValue(value)
+        dispatch(setDishesType(dishTypes[value]))
+        dispatch(resetPagination())
+        dispatch(getDishesAsync())
     }
 
     return (
@@ -18,7 +24,11 @@ export default function TabContainer() {
                 {tabItems.map((item) => (
                     <Tab
                         key={item.alt}
-                        icon={<img src={item.image} alt={item.alt} />}
+                        icon={
+                            <Box className={classes.iconContainer}>
+                                <img src={item.image} alt={item.alt} />
+                            </Box>
+                        }
                         iconPosition={item.iconPosition}
                         label={item.label}
                     />
@@ -46,6 +56,7 @@ const useStyles = makeStyles(() =>
             '& .MuiTab-root': {
                 width: 'fit-content',
                 minHeight: 0,
+                borderRadius: '20px',
                 fontFamily: 'Rubik',
                 fontSize: '14px',
                 fontWeight: 400,
@@ -56,7 +67,14 @@ const useStyles = makeStyles(() =>
                 '&:last-child': {
                     marginBottom: 0,
                 },
+                '&:hover:not(.Mui-selected)': {
+                    backgroundColor: '#D1D1D1',
+                },
             },
+        },
+        iconContainer: {
+            width: '34px',
+            height: '34px',
         },
     }),
 )

@@ -5,4 +5,6 @@ export enum MainPageTypes {
     SET_DISHES = 'mainPage/dishes/set',
     SET_SEARCH = 'mainPage/search/set',
     SET_SORTING_SELECT = 'mainPage/sortingSelect/set',
+
+    SET_DISH_TYPE = 'mainPage/dishType/set',
 }

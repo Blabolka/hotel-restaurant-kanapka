@@ -8,6 +8,7 @@ interface initialStateTypes {
     pagination: { page: number; totalPages: number }
     search: string
     sortingSelectValue: SORTING_SELECT_VALUES
+    dishType: string
 }
 
 const initialState: initialStateTypes = {
@@ -18,6 +19,7 @@ const initialState: initialStateTypes = {
     },
     search: '',
     sortingSelectValue: SORTING_SELECT_VALUES.ASC,
+    dishType: '',
 }
 
 const paginationReducer = (state = initialState, action) => {
@@ -39,6 +41,10 @@ const paginationReducer = (state = initialState, action) => {
 
         case MainPageTypes.SET_SORTING_SELECT: {
             return { ...state, sortingSelectValue: action.payload }
+        }
+
+        case MainPageTypes.SET_DISH_TYPE: {
+            return { ...state, dishType: action.payload }
         }
 
         default: {
