@@ -68,12 +68,13 @@ export default function DishItemsCart() {
 const useStyles = makeStyles(() =>
     createStyles({
         root: {
-            minHeight: '270px',
-            maxHeight: '270px',
+            minHeight: '300px',
+            maxHeight: '300px',
         },
         dishesContainer: {
             flexDirection: 'column',
             gap: '24px',
+            marginTop: '18px',
             overflow: 'scroll',
         },
     }),
