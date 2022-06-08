@@ -4,7 +4,7 @@ import { useAppDispatch } from '@hooks'
 import { getDishesAsync, getCartDishesFromLocalStorageAsync, resetPagination, setDishesType } from '@redux-actions/mainPageActions'
 
 import MainPageCenterBlock from './CenterBlock/MainPageCenterBlock'
-import MainPageCartRightBlock from './CartRightBlock/MainPageCartRightBlock'
+import MainPageCartRightBlock from './RightBlock/MainPageCartRightBlock'
 
 import { createStyles, makeStyles } from '@mui/styles'
 import { Box } from '@mui/material'
