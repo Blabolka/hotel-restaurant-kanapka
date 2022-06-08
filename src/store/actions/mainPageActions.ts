@@ -1,7 +1,7 @@
 import api from '@api/index'
 
 import { MainPageTypes } from '../types'
-import { DishInfo } from '@components/Dishes/dishItemUtils'
+import { DishInfo, DishCartInfo } from '@components/Dishes/dishItemUtils'
 
 import { PAGINATION_SIZE_PER_PAGE } from '@pages/MainPage/mainPageUtils'
 import { dishTypes } from '@components/TabContainer/tabContainerUtils'
@@ -45,7 +45,15 @@ export const getCartDishesFromLocalStorageAsync = () => {
             if (Array.isArray(dishes) && dishes.length) {
                 const dishesIds = dishes.map((dish) => dish.id)
                 api.dishes.getDishesByIdList(dishesIds).then((requestData) => {
-                    dispatch(setCart({ ...mainPage.cart, dishes: requestData.data }))
+                    const filteredDishes = requestData.data.reduce((memo: DishCartInfo[], item: DishInfo) => {
+                        const itemFromCart = dishes.find((dish) => dish.id === item.id)
+                        if (itemFromCart) {
+                            memo.push({ ...item, count: itemFromCart.count })
+                        }
+
+                        return memo
+                    }, [])
+                    dispatch(setCart({ ...mainPage.cart, dishes: filteredDishes }))
                 })
             }
         }

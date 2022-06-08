@@ -1,9 +1,10 @@
 import { AxiosResponse, AxiosStatic } from 'axios'
-import { IGetAllDishesPaginatedParams, IGetDishesResponse, IGetAllDishesPaginatedResponse } from './dishesApiUtils'
+import { DishInfo } from '@components/Dishes/dishItemUtils'
+import { IGetAllDishesPaginatedParams, IGetAllDishesPaginatedResponse } from './dishesApiUtils'
 
 export const getDishesApi = (axios: AxiosStatic) => {
-    const getDishesByIdList = (body: number[]): Promise<AxiosResponse<IGetDishesResponse>> => {
-        return axios.get('/dishes/internal', { data: JSON.stringify(body) })
+    const getDishesByIdList = (body: number[]): Promise<AxiosResponse<DishInfo[]>> => {
+        return axios.get(`/dishes/internal/${body.join(',')}`)
     }
 
     const getAllDishesPaginated = (
