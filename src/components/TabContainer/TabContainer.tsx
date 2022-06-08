@@ -24,7 +24,11 @@ export default function TabContainer() {
                 {tabItems.map((item) => (
                     <Tab
                         key={item.alt}
-                        icon={<img src={item.image} alt={item.alt} />}
+                        icon={
+                            <Box className={classes.iconContainer}>
+                                <img src={item.image} alt={item.alt} />
+                            </Box>
+                        }
                         iconPosition={item.iconPosition}
                         label={item.label}
                     />
@@ -52,6 +56,7 @@ const useStyles = makeStyles(() =>
             '& .MuiTab-root': {
                 width: 'fit-content',
                 minHeight: 0,
+                borderRadius: '20px',
                 fontFamily: 'Rubik',
                 fontSize: '14px',
                 fontWeight: 400,
@@ -62,7 +67,14 @@ const useStyles = makeStyles(() =>
                 '&:last-child': {
                     marginBottom: 0,
                 },
+                '&:hover:not(.Mui-selected)': {
+                    backgroundColor: '#D1D1D1',
+                },
             },
+        },
+        iconContainer: {
+            width: '34px',
+            height: '34px',
         },
     }),
 )

@@ -12,7 +12,7 @@ export default function Menu() {
         <Box className={classes.root}>
             <Logo />
             <Box className={classes.menu}>
-                <Typography className={classes.menuText}>Menu</Typography>
+                <Typography className={classes.menuText}>Меню</Typography>
             </Box>
             <TabContainer />
         </Box>
