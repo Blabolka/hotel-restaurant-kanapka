@@ -4,22 +4,28 @@ import { MainPageTypes } from '../types'
 import { DishInfo } from '@components/Dishes/dishItemUtils'
 
 import { PAGINATION_SIZE_PER_PAGE } from '@pages/MainPage/mainPageUtils'
+import { dishTypes } from '@components/TabContainer/tabContainerUtils'
 
 export const getDishesAsync = () => {
     return (dispatch, getState) => {
         const { mainPage } = getState()
 
-        api.dishes
-            .getAllDishesPaginated({
-                page: mainPage.pagination.page - 1,
-                size: PAGINATION_SIZE_PER_PAGE,
-                name: mainPage.search,
-                sort: mainPage.sortingSelectValue,
-            })
-            .then((requestData) => {
-                dispatch(setDishes(requestData.data.content))
-                dispatch(setPagination({ ...mainPage.pagination, totalPages: requestData.data.totalPages }))
-            })
+        const params = {
+            page: mainPage.pagination.page - 1,
+            size: PAGINATION_SIZE_PER_PAGE,
+            name: mainPage.search,
+            sort: mainPage.sortingSelectValue,
+        }
+
+        mainPage.dishType === dishTypes[0]
+            ? api.dishes.getAllDishesPaginated(params).then((requestData) => {
+                  dispatch(setDishes(requestData.data.content))
+                  dispatch(setPagination({ ...mainPage.pagination, totalPages: requestData.data.totalPages }))
+              })
+            : api.dishes.getDishesByTypePaginated(mainPage.dishType, params).then((requestData) => {
+                  dispatch(setDishes(requestData.data.content))
+                  dispatch(setPagination({ ...mainPage.pagination, totalPages: requestData.data.totalPages }))
+              })
     }
 }
 
@@ -43,5 +49,10 @@ export const setSearch = (state: string) => ({
 
 export const setSortingSelect = (state: string) => ({
     type: MainPageTypes.SET_SORTING_SELECT,
+    payload: state,
+})
+
+export const setDishesType = (state: string) => ({
+    type: MainPageTypes.SET_DISH_TYPE,
     payload: state,
 })
