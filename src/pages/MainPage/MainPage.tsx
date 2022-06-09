@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react'
 import { useAppDispatch } from '@hooks'
 import { getDishesAsync, getCartDishesFromLocalStorageAsync, resetPagination, setDishesType } from '@redux-actions/mainPageActions'
 
-import MainPageCenterBlock from './CenterBlock/MainPageCenterBlock'
-import MainPageCartRightBlock from './RightBlock/MainPageCartRightBlock'
-
-import { createStyles, makeStyles } from '@mui/styles'
 import { Box } from '@mui/material'
+import { createStyles, makeStyles } from '@mui/styles'
+
 import NavigationPanel from '@components/NavigationPanel/NavigationPanel'
 import { dishTypes, TabItem } from '@components/TabContainer/tabContainerUtils'
 import { getTabItems } from '@pages/MainPage/mainPageUtils'
+import MainPageCenterBlock from './CenterBlock/MainPageCenterBlock'
+import MainPageCartRightBlock from './RightBlock/MainPageCartRightBlock'
 
 export default function MainPage() {
     const classes = useStyles()
