@@ -14,7 +14,7 @@ export default function DishItemsCart() {
     const dispatch = useAppDispatch()
     const cart = useAppSelector((state) => state.mainPage.cart)
 
-    const onCounterDecreaseClick = (dishId: string) => {
+    const onCounterDecreaseClick = (dishId: number) => {
         const newCartDishes = cart.dishes.map((dish) => {
             if (dish.id === dishId && dish.count > 1) {
                 dish.count -= 1
@@ -25,7 +25,7 @@ export default function DishItemsCart() {
         dispatch(setCart({ ...cart, dishes: newCartDishes }))
     }
 
-    const onCounterIncreaseClick = (dishId: string) => {
+    const onCounterIncreaseClick = (dishId: number) => {
         const newCartDishes = cart.dishes.map((dish) => {
             if (dish.id === dishId && dish.count < 9) {
                 dish.count += 1
@@ -36,7 +36,7 @@ export default function DishItemsCart() {
         dispatch(setCart({ ...cart, dishes: newCartDishes }))
     }
 
-    const onDishItemRemoveClick = (dishId: string) => {
+    const onDishItemRemoveClick = (dishId: number) => {
         const newCartDishes = cart.dishes.filter((dish) => dish.id !== dishId)
         dispatch(setCart({ ...cart, dishes: newCartDishes }))
     }
@@ -68,8 +68,8 @@ export default function DishItemsCart() {
 const useStyles = makeStyles(() =>
     createStyles({
         root: {
-            minHeight: '300px',
-            maxHeight: '300px',
+            minHeight: '400px',
+            maxHeight: '400px',
         },
         dishesContainer: {
             flexDirection: 'column',

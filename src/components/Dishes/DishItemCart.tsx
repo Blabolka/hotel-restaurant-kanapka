@@ -11,9 +11,9 @@ import RemoveDishFromCartImage from '@assets/img/remove-cart-dish.svg'
 import { DishCartInfo } from './dishItemUtils'
 interface DishItemCartProps {
     dishInfo: DishCartInfo
-    onCounterDecreaseClick?: (id: string) => void
-    onCounterIncreaseClick?: (id: string) => void
-    onDishItemRemoveClick?: (id: string) => void
+    onCounterDecreaseClick?: (id: number) => void
+    onCounterIncreaseClick?: (id: number) => void
+    onDishItemRemoveClick?: (id: number) => void
 }
 
 export default function DishItemCart({
@@ -41,7 +41,7 @@ export default function DishItemCart({
                         >
                             <RemoveIcon fontSize="small" />
                         </IconButton>
-                        <span className={classes.colorWhite}>{dishInfo.count}</span>
+                        <span>{dishInfo.count}</span>
                         <IconButton
                             className={classes.colorPrimary}
                             size="small"
@@ -75,6 +75,7 @@ const useStyles = makeStyles(() =>
             '& img': {
                 height: '100%',
                 maxWidth: '100%',
+                userSelect: 'none',
             },
         },
         dishCountChanger: {

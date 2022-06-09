@@ -12,7 +12,7 @@ const DishItemsGrid = () => {
     const dishes: DishInfo[] = useAppSelector((state) => state.mainPage.dishes)
     const cart = useAppSelector((state) => state.mainPage.cart)
 
-    const onAddDishButtonClick = (dishId: string) => {
+    const onAddDishButtonClick = (dishId: number) => {
         const cartDishes = [...cart.dishes]
         const dishFromCart = cartDishes.find((dish) => dish.id === dishId)
         if (dishFromCart) {

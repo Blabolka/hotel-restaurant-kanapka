@@ -10,7 +10,7 @@ import AddDishIcon from '@assets/img/add-dish-icon.svg'
 import { DishInfo } from './dishItemUtils'
 interface DishBlockItemProps {
     dishInfo: DishInfo
-    onAddButtonClick?: (id: string) => void
+    onAddButtonClick?: (id: number) => void
 }
 
 export default function DishItemBlock({ dishInfo, onAddButtonClick = () => false }: DishBlockItemProps) {
@@ -61,6 +61,7 @@ const useStyles = makeStyles(() =>
             '& img': {
                 height: '100%',
                 maxWidth: '100%',
+                userSelect: 'none',
             },
         },
     }),

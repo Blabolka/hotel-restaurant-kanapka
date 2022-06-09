@@ -11,7 +11,7 @@ export default function EmptyState() {
     return (
         <Stack className={classes.root}>
             <Stack className={classes.container}>
-                <img className={classes.imageContainer} src={BasketIcon} alt="Empty Cart Image" />
+                <img draggable={false} className={classes.imageContainer} src={BasketIcon} alt="Empty Cart Image" />
                 <span className="color-secondary">Додай сюди все, що захочеш</span>
             </Stack>
         </Stack>
@@ -26,6 +26,7 @@ const useStyles = makeStyles(() =>
             opacity: 0.5,
             alignItems: 'center',
             justifyContent: 'center',
+            userSelect: 'none',
         },
         container: {
             maxWidth: '130px',
