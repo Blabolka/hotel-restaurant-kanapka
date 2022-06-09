@@ -1,27 +1,21 @@
 import React from 'react'
 import { Box, Tab, Tabs } from '@mui/material'
 import { createStyles, makeStyles } from '@mui/styles'
-import { dishTypes, tabItems } from '@components/TabContainer/tabContainerUtils'
-import { getDishesAsync, resetPagination, setDishesType } from '@redux-actions/mainPageActions'
-import { useAppDispatch } from '@hooks'
+import { TabItem } from '@components/TabContainer/tabContainerUtils'
 
-export default function TabContainer() {
+interface TabContainerProps {
+    items: TabItem[]
+    openedTab: number
+    onTabChange: (event: React.SyntheticEvent, value: number) => void
+}
+
+export default function TabContainer({ items, openedTab, onTabChange }: TabContainerProps) {
     const classes = useStyles()
-    const dispatch = useAppDispatch()
-
-    const [value, setValue] = React.useState(0)
-
-    const handleChange = (event: React.SyntheticEvent, value: number) => {
-        setValue(value)
-        dispatch(setDishesType(dishTypes[value]))
-        dispatch(resetPagination())
-        dispatch(getDishesAsync())
-    }
 
     return (
         <Box>
-            <Tabs className={classes.tabs} value={value} onChange={handleChange} orientation="vertical">
-                {tabItems.map((item) => (
+            <Tabs className={classes.tabs} value={openedTab} onChange={onTabChange} orientation="vertical">
+                {items.map((item: TabItem) => (
                     <Tab
                         key={item.alt}
                         icon={
@@ -75,6 +69,8 @@ const useStyles = makeStyles(() =>
         iconContainer: {
             width: '34px',
             height: '34px',
+            display: 'flex',
+            alignItems: 'center',
         },
     }),
 )

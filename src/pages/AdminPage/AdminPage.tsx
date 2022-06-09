@@ -1,30 +1,18 @@
-import React, { useEffect, useState } from 'react'
-
-import { useAppDispatch } from '@hooks'
-import { getDishesAsync, resetPagination, setDishesType } from '@redux-actions/mainPageActions'
-
-import CenterBlock from './CenterBlock/MainPageCenterBlock'
+import React, { useState } from 'react'
 import { createStyles, makeStyles } from '@mui/styles'
 import { Box } from '@mui/material'
 import NavigationPanel from '@components/NavigationPanel/NavigationPanel'
-import { dishTypes, TabItem } from '@components/TabContainer/tabContainerUtils'
-import { getTabItems } from '@pages/MainPage/mainPageUtils'
+import CenterBlock from '@pages/AdminPage/CenterBlock/CenterBlock'
+import { TabItem } from '@components/TabContainer/tabContainerUtils'
+import { getTabItems } from '@pages/AdminPage/adminPageUtils'
 
-export default function MainPage() {
+export default function AdminPage() {
     const classes = useStyles()
-    const dispatch = useAppDispatch()
 
     const [openedTab, setOpenedTab] = useState(0)
 
-    useEffect(() => {
-        dispatch(getDishesAsync())
-    }, [])
-
     const onTabChange = (event: React.SyntheticEvent, value: number) => {
         setOpenedTab(value)
-        dispatch(setDishesType(dishTypes[value]))
-        dispatch(resetPagination())
-        dispatch(getDishesAsync())
     }
 
     const tabItems: TabItem[] = getTabItems()
@@ -32,7 +20,7 @@ export default function MainPage() {
     return (
         <Box className={classes.root}>
             <Box className={classes.container}>
-                <NavigationPanel title="Меню" items={tabItems} openedTab={openedTab} onTabChange={onTabChange} />
+                <NavigationPanel title="Управління" items={tabItems} openedTab={openedTab} onTabChange={onTabChange} />
                 <CenterBlock />
                 <Box className={classes.orderContainer}>Right side</Box>
             </Box>
