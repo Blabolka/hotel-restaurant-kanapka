@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react'
 
 import { useAppDispatch } from '@hooks'
-import { getDishesAsync, getCartDishesFromLocalStorageAsync, resetPagination, setDishesType } from '@redux-actions/mainPageActions'
+import {
+    getDishesAsync,
+    getCartDishesFromLocalStorageAsync,
+    resetPagination,
+    setDishesType,
+} from '@redux-actions/mainPageActions'
 
 import { Box } from '@mui/material'
 import { createStyles, makeStyles } from '@mui/styles'
