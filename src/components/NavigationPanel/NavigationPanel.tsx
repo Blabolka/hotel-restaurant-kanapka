@@ -4,17 +4,25 @@ import { Box, Typography } from '@mui/material'
 import { createStyles, makeStyles } from '@mui/styles'
 import TabContainer from '@components/TabContainer/TabContainer'
 import Logo from '@components/Logo/Logo'
+import { TabItem } from '@components/TabContainer/tabContainerUtils'
 
-export default function Menu() {
+interface MenuProps {
+    title: string
+    items: TabItem[]
+    openedTab: number
+    onTabChange: (event: React.SyntheticEvent, value: number) => void
+}
+
+export default function NavigationPanel({ title, items, openedTab, onTabChange }: MenuProps) {
     const classes = useStyles()
 
     return (
         <Box className={classes.root}>
             <Logo />
             <Box className={classes.menu}>
-                <Typography className={classes.menuText}>Меню</Typography>
+                <Typography className={classes.menuText}>{title}</Typography>
             </Box>
-            <TabContainer />
+            <TabContainer items={items} openedTab={openedTab} onTabChange={onTabChange} />
         </Box>
     )
 }

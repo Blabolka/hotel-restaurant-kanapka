@@ -6,6 +6,7 @@ import PageBackgroundDecoration from '@components/PageBackgroundDecoration'
 import { createTheme, ThemeProvider } from '@mui/material'
 
 const MainPage = React.lazy(() => import('@pages/MainPage/MainPage'))
+const AdminPage = React.lazy(() => import('@pages/AdminPage/AdminPage'))
 
 const theme = createTheme({
     typography: {
@@ -21,6 +22,7 @@ const App = () => {
                     <React.Suspense fallback={<Loading />}>
                         <Routes>
                             <Route path="/" element={<MainPage />} />
+                            <Route path="/admin" element={<AdminPage />} />
                         </Routes>
                     </React.Suspense>
                 </div>
