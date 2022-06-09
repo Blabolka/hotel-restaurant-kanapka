@@ -60,7 +60,7 @@ export const getCartDishesFromLocalStorageAsync = () => {
     }
 }
 
-export const setCart = (state: DishInfo[]) => ({
+export const setCart = (state) => ({
     type: MainPageTypes.SET_CART,
     payload: state,
 })

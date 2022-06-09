@@ -5,6 +5,7 @@ import { createStyles, makeStyles } from '@mui/styles'
 
 import DishItemsCart from './DishItemsCart/DishItemsCart'
 import CartSum from './CartSum/CartSum'
+import OrderConfirm from '@pages/MainPage/RightBlock/OrderConfirm/OrderConfirm'
 
 export default function MainPageCartRightBlock() {
     const classes = useStyles()
@@ -13,6 +14,7 @@ export default function MainPageCartRightBlock() {
         <Stack className={classes.root}>
             <DishItemsCart />
             <CartSum />
+            <OrderConfirm />
         </Stack>
     )
 }
