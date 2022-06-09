@@ -2,6 +2,7 @@ import React from 'react'
 import { Stack } from '@mui/material'
 import DishSearchBar from '@pages/MainPage/CenterBlock/Filtering/DishSearchBar/DishSearchBar'
 import DishSortingSelect from '@pages/MainPage/CenterBlock/Filtering/DishSortingSelect/DishSortingSelect'
+import FormRow from '@pages/AdminPage/FormRow/FormRow'
 
 export default function CenterBlock() {
     return (
@@ -11,6 +12,7 @@ export default function CenterBlock() {
                     <DishSearchBar />
                     <DishSortingSelect />
                 </Stack>
+                <FormRow />
             </Stack>
         </Stack>
     )
