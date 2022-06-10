@@ -25,6 +25,7 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             minWidth: '360px',
+            height: '100%',
             padding: '20px',
             background: 'white',
             borderRadius: '30px',

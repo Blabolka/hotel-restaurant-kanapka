@@ -64,6 +64,10 @@ export const setCart = (state) => ({
     type: MainPageTypes.SET_CART,
     payload: state,
 })
+export const setCartDeliveryDate = (state: Date | null) => ({
+    type: MainPageTypes.SET_CART_DELIVERY_DATE,
+    payload: state,
+})
 
 export const resetPagination = () => ({
     type: MainPageTypes.RESET_PAGINATION,
