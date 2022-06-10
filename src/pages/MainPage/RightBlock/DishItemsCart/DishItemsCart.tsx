@@ -68,8 +68,7 @@ export default function DishItemsCart() {
 const useStyles = makeStyles(() =>
     createStyles({
         root: {
-            minHeight: '400px',
-            maxHeight: '400px',
+            height: '400px',
         },
         dishesContainer: {
             flexDirection: 'column',

@@ -27,7 +27,7 @@ export default function DishItemCart({
     return (
         <Stack flexDirection="row" gap="10px">
             <Stack className={classes.imageContainer}>
-                <img src={dishInfo.imagePath} alt={`${dishInfo.name} Image`} />
+                <img draggable={false} src={dishInfo.imagePath} alt={`${dishInfo.name} Image`} />
             </Stack>
             <Stack flexDirection="column" gap="8px" width="100%" marginTop="6px">
                 <span>{dishInfo.name}</span>
