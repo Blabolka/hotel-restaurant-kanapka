@@ -2,7 +2,7 @@ import api from '@api/index'
 
 import { MainPageTypes } from '../types'
 import { DishInfo, DishCartInfo } from '@components/Dishes/dishItemUtils'
-
+import { DELIVERY_MODE_VALUES } from '@pages/MainPage/RightBlock/Delivery/deliveryModeSwitcherUtils'
 import { PAGINATION_SIZE_PER_PAGE } from '@pages/MainPage/mainPageUtils'
 import { dishTypes } from '@components/TabContainer/tabContainerUtils'
 
@@ -62,6 +62,10 @@ export const getCartDishesFromLocalStorageAsync = () => {
 
 export const setCart = (state) => ({
     type: MainPageTypes.SET_CART,
+    payload: state,
+})
+export const setCartDeliveryMode = (state: DELIVERY_MODE_VALUES) => ({
+    type: MainPageTypes.SET_CART_DELIVERY_MODE,
     payload: state,
 })
 export const setCartDeliveryDate = (state: Date | null) => ({

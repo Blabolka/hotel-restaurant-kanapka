@@ -52,7 +52,10 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             width: '1360px',
-            margin: '40px auto',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginTop: '40px',
+            paddingBottom: '40px',
         },
         container: {
             display: 'flex',

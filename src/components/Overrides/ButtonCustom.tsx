@@ -12,9 +12,15 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             color: '#000000',
-            backgroundColor: '#F8AC1B',
             borderRadius: '20px',
             textTransform: 'none',
+
+            '&.MuiButton-contained': {
+                backgroundColor: '#F8AC1B',
+            },
+            '&.MuiButton-outlined': {
+                borderColor: '#F8AC1B',
+            },
         },
     }),
 )

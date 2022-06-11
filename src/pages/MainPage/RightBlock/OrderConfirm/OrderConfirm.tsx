@@ -4,6 +4,7 @@ import api from '@api/index'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import { setCart } from '@redux-actions/mainPageActions'
 
+import { DELIVERY_MODE_VALUES } from '@pages/MainPage/RightBlock/Delivery/deliveryModeSwitcherUtils'
 import CircularProgress from '@mui/material/CircularProgress'
 import LoadingButtonCustom from '@components/Overrides/LoadingButtonCustom'
 import { createStyles, makeStyles } from '@mui/styles'
@@ -18,6 +19,9 @@ export default function OrderConfirm() {
         if (cart.dishes.length) {
             setIsButtonLoading(true)
 
+            const deliveryExpectedDate =
+                cart.deliveryMode === DELIVERY_MODE_VALUES.AS_SOON_AS_POSSIBLE ? null : cart.deliveryDate
+
             const dishesMap = cart.dishes.reduce((memo, dish) => {
                 memo[`${dish.id}`] = dish.count
                 return memo
@@ -27,7 +31,7 @@ export default function OrderConfirm() {
                 .createOrder({
                     guestId: 1,
                     phone: '0995678499',
-                    expectedDate: null,
+                    expectedDate: deliveryExpectedDate,
                     dishes: dishesMap,
                 })
                 .then(() => {
@@ -36,7 +40,7 @@ export default function OrderConfirm() {
                 })
                 .catch((err) => {
                     console.log(err)
-                    setIsButtonLoading(true)
+                    setIsButtonLoading(false)
                 })
         }
     }
