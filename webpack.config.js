@@ -3,7 +3,7 @@ const Dotenv = require('dotenv-webpack')
 const CopyPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = (env, arguments) => {
     return {
@@ -19,7 +19,6 @@ module.exports = (env, arguments) => {
             roots: [__dirname],
             alias: {
                 '@api': path.resolve('src', 'api'),
-                '@hooks': path.resolve('src', 'app', 'hooks'),
                 '@assets': path.resolve('src', 'assets'),
                 '@components': path.resolve('src', 'components'),
                 '@pages': path.resolve('src', 'pages'),
@@ -27,6 +26,7 @@ module.exports = (env, arguments) => {
                 '@redux-store': path.resolve('src', 'store'),
                 '@interfaces': path.resolve('src', 'interfaces'),
                 '@utils': path.resolve('src', 'utils'),
+                '@hooks': path.resolve('src', 'utils', 'hooks'),
             },
         },
         module: {
@@ -96,7 +96,7 @@ module.exports = (env, arguments) => {
         plugins: [
             new HtmlWebpackPlugin({ template: path.join(__dirname, 'public', 'index.html') }),
             new MiniCssExtractPlugin({
-                filename: '[name].[contenthash].min.css'
+                filename: '[name].[contenthash].min.css',
             }),
             new CleanWebpackPlugin(),
             new Dotenv(),
