@@ -48,27 +48,12 @@ export default function MenuBlock() {
         }
         const file = event.target.files[0]
         const { name } = file
-        const newObject = {
-            name: file.name,
-            size: file.size,
-            type: file.type,
-            lastModified: file.lastModified,
-        }
-        dispatch(setDishInfo(id, 'imagePath', JSON.stringify(newObject)))
+
+        dispatch(setDishInfo(id, 'imagePath', name))
     }
-    // console.log(dishes)
 
     const handleSaveData = (id: string | number) => {
         setEditRowIds(editRowIds.filter((item: string | number) => item !== id))
-        const dish = dishes.find((item: DishInfo) => item.id === id)
-        console.log(dish)
-
-        dispatch(
-            updateDishByIdAsync(id, {
-                data: { name: dish?.name, price: dish?.price, description: dish?.description },
-                image: JSON.parse(dish?.imagePath || '{}'),
-            }),
-        )
     }
 
     const formatPhotoColumn = (value: DataValueTypes, row: Data) => {

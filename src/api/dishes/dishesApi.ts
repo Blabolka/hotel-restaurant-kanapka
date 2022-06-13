@@ -26,7 +26,11 @@ export const getDishesApi = (axios: AxiosInstance) => {
     ): Promise<AxiosResponse<IGetPopularDishesPaginatedResponse>> => axios.get('/admin/orders/popular', { params })
 
     const updateDishById = (id: string | number, params: any): Promise<AxiosResponse> =>
-        axios.patch(`/admin/dishes/${id}`, { params })
+        axios.patch(`/admin/dishes/${id}`, params, {
+            headers: {
+                ...params.getHeaders(),
+            },
+        })
 
     return {
         getDishesByIdList,
