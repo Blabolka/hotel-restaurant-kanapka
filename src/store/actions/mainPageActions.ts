@@ -29,6 +29,14 @@ export const getDishesAsync = () => {
     }
 }
 
+export const updateDishByIdAsync = (id: string | number, params: any) => (dispatch, getState) => {
+    const { mainPage } = getState()
+
+    api.dishes.updateDishById(id, params).then(() => {
+        console.log('success')
+    })
+}
+
 export const setDishes = (state: DishInfo[]) => ({
     type: MainPageTypes.SET_DISHES,
     payload: state,
@@ -94,4 +102,13 @@ export const setSortingSelect = (state: string) => ({
 export const setDishesType = (state: string) => ({
     type: MainPageTypes.SET_DISH_TYPE,
     payload: state,
+})
+
+export const setDishInfo = (id: number, field: string, value: string) => ({
+    type: MainPageTypes.SET_DISH_INFO,
+    payload: {
+        id,
+        field,
+        value,
+    },
 })

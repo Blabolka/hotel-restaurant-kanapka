@@ -16,9 +16,13 @@ export const getDishesApi = (axios: AxiosInstance) => {
         params: IGetAllDishesPaginatedParams,
     ): Promise<AxiosResponse<IGetAllDishesPaginatedResponse>> => axios.get(`/dishes/${dishType}`, { params })
 
+    const updateDishById = (id: string | number, params: any): Promise<AxiosResponse> =>
+        axios.patch(`/admin/dishes/${id}`, { params })
+
     return {
         getDishesByIdList,
         getAllDishesPaginated,
         getDishesByTypePaginated,
+        updateDishById,
     }
 }

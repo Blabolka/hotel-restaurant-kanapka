@@ -22,7 +22,6 @@ export default function AdminPage() {
             <Box className={classes.container}>
                 <NavigationPanel title="Управління" items={tabItems} openedTab={openedTab} onTabChange={onTabChange} />
                 <CenterBlock />
-                <Box className={classes.orderContainer}>Right side</Box>
             </Box>
         </Box>
     )
@@ -40,11 +39,6 @@ const useStyles = makeStyles(() =>
         container: {
             display: 'flex',
             gap: '20px',
-        },
-        orderContainer: {
-            minWidth: '360px',
-            background: 'white',
-            borderRadius: '30px',
         },
     }),
 )
