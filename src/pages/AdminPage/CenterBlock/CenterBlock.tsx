@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Box, Button, TextField, Typography } from '@mui/material'
 import DishSearchBar from '@pages/MainPage/CenterBlock/Filtering/DishSearchBar/DishSearchBar'
 import DishSortingSelect from '@pages/MainPage/CenterBlock/Filtering/DishSortingSelect/DishSortingSelect'
 import { createStyles, makeStyles } from '@mui/styles'
 import CustomTable, { Column, Data, DataValueTypes } from '@pages/AdminPage/CustomTable/CustomTable'
 import { getColumns, getRows } from '@pages/AdminPage/CenterBlock/centerBlockUtils'
-import { getDishesAsync } from '@redux-actions/mainPageActions'
+import { getDishesAsync, setDishInfo } from '@redux-actions/mainPageActions'
 import { DishInfo } from '@components/Dishes/dishItemUtils'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import edit from '@assets/img/edit.svg'
@@ -28,7 +28,7 @@ export default function CenterBlock() {
         dispatch(getDishesAsync())
     }, [])
 
-    const formatTextFieldColumn = (value: DataValueTypes, row: Data, columnName: string) => {
+    const formatTextFieldColumn = (value: DataValueTypes, row: Data, columnName?: string) => {
         return (
             <TextField
                 className={classes.textField}
@@ -42,6 +42,28 @@ export default function CenterBlock() {
         )
     }
 
+    const handleFileUpload = (event: ChangeEvent<HTMLInputElement>, id: number) => {
+        if (!event.target.files) {
+            return
+        }
+        const file = event.target.files[0]
+        const { name } = file
+        const newObject = {
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            lastModified: file.lastModified,
+        }
+        dispatch(setDishInfo(id, 'imagePath', JSON.stringify(newObject)))
+    }
+    // console.log(dishes)
+
+    const handleSaveData = (id: string | number) => {
+        setEditRowIds(editRowIds.filter((item: string | number) => item !== id))
+        const dish = dishes.find((item: DishInfo) => item.id === id)
+        console.log(dish)
+    }
+
     const formatPhotoColumn = (value: DataValueTypes, row: Data) => {
         const filename = value?.toString().split('/').pop()
         return filename ? (
@@ -50,13 +72,15 @@ export default function CenterBlock() {
                     <img src={picture} alt="Picture" />
                     <Typography variant="body2">{filename}</Typography>
                 </Box>
-                {editRowIds.includes(row.id) && <CloseIcon onClick={() => {}} fontSize="small" />}
+                {editRowIds.includes(row.id) && (
+                    <CloseIcon onClick={() => dispatch(setDishInfo(+row.id, 'imagePath', ''))} fontSize="small" />
+                )}
             </Box>
         ) : (
             <Button className={classes.downloadButton} component="label">
                 <Typography variant="body2">Завантажити</Typography>
                 <FileDownloadOutlinedIcon fontSize="small" />
-                <input type="file" hidden onChange={() => {}} />
+                <input type="file" hidden onChange={(event) => handleFileUpload(event, +row.id)} />
             </Button>
         )
     }
@@ -64,13 +88,7 @@ export default function CenterBlock() {
     const createActions = (value: DataValueTypes, row: Data) => {
         return editRowIds.includes(row.id) ? (
             <Box className={classes.actionButtons}>
-                <img
-                    src={save}
-                    alt="Save"
-                    onClick={() => {
-                        setEditRowIds(editRowIds.filter((item: string | number) => item !== row.id))
-                    }}
-                />
+                <img src={save} alt="Save" onClick={() => handleSaveData(row.id)} />
                 <img
                     src={undo}
                     alt="Undo"
@@ -131,6 +149,9 @@ const useStyles = makeStyles(() =>
                     border: '0',
                 },
             },
+            '& .Mui-disabled': {
+                '-webkit-text-fill-color': 'black',
+            },
         },
         downloadButton: {
             display: 'flex',
@@ -145,6 +166,9 @@ const useStyles = makeStyles(() =>
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
+            '& svg:hover': {
+                cursor: 'pointer',
+            },
         },
         loadedFile: {
             display: 'flex',

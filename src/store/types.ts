@@ -12,4 +12,5 @@ export enum MainPageTypes {
     SET_SORTING_SELECT = 'mainPage/sortingSelect/set',
 
     SET_DISH_TYPE = 'mainPage/dishType/set',
+    SET_DISH_INFO = 'mainPage/dishInfo/set',
 }

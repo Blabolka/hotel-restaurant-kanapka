@@ -95,3 +95,12 @@ export const setDishesType = (state: string) => ({
     type: MainPageTypes.SET_DISH_TYPE,
     payload: state,
 })
+
+export const setDishInfo = (id: number, field: string, value: string) => ({
+    type: MainPageTypes.SET_DISH_INFO,
+    payload: {
+        id,
+        field,
+        value,
+    },
+})

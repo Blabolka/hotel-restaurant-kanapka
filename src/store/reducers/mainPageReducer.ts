@@ -68,6 +68,18 @@ const paginationReducer = (state = initialState, action) => {
             return { ...state, dishType: action.payload }
         }
 
+        case MainPageTypes.SET_DISH_INFO: {
+            return {
+                ...state,
+                dishes: state.dishes.map((dish: DishInfo) => {
+                    if (dish.id === action.payload.id) {
+                        return { ...dish, [action.payload.field]: action.payload.value }
+                    }
+                    return dish
+                }),
+            }
+        }
+
         default: {
             return state
         }
