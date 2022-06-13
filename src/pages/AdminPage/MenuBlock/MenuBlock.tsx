@@ -4,7 +4,7 @@ import DishSearchBar from '@pages/MainPage/CenterBlock/Filtering/DishSearchBar/D
 import DishSortingSelect from '@pages/MainPage/CenterBlock/Filtering/DishSortingSelect/DishSortingSelect'
 import { createStyles, makeStyles } from '@mui/styles'
 import CustomTable, { Column, Data, DataValueTypes } from '@pages/AdminPage/CustomTable/CustomTable'
-import { getColumns, getRows } from '@pages/AdminPage/CenterBlock/centerBlockUtils'
+import { getColumns, getRows } from '@pages/AdminPage/MenuBlock/menuBlockUtils'
 import { getDishesAsync, setDishInfo, updateDishByIdAsync } from '@redux-actions/mainPageActions'
 import { DishInfo } from '@components/Dishes/dishItemUtils'
 import { useAppDispatch, useAppSelector } from '@hooks'
@@ -16,7 +16,7 @@ import picture from '@assets/img/picture.svg'
 import CloseIcon from '@mui/icons-material/Close'
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined'
 
-export default function CenterBlock() {
+export default function MenuBlock() {
     const classes = useStyles()
     const dispatch = useAppDispatch()
 
