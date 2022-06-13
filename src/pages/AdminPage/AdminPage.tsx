@@ -23,7 +23,9 @@ export default function AdminPage() {
         switch (tab) {
             case 0:
                 return <MenuBlock />
-            default:
+            case 1:
+                return null
+            case 2:
                 return <StatisticsBlock />
         }
     }
