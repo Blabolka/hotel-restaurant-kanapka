@@ -5,7 +5,7 @@ import DishSortingSelect from '@pages/MainPage/CenterBlock/Filtering/DishSorting
 import { createStyles, makeStyles } from '@mui/styles'
 import CustomTable, { Column, Data, DataValueTypes } from '@pages/AdminPage/CustomTable/CustomTable'
 import { getColumns, getRows } from '@pages/AdminPage/CenterBlock/centerBlockUtils'
-import { getDishesAsync, setDishInfo } from '@redux-actions/mainPageActions'
+import { getDishesAsync, setDishInfo, updateDishByIdAsync } from '@redux-actions/mainPageActions'
 import { DishInfo } from '@components/Dishes/dishItemUtils'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import edit from '@assets/img/edit.svg'
@@ -62,6 +62,13 @@ export default function CenterBlock() {
         setEditRowIds(editRowIds.filter((item: string | number) => item !== id))
         const dish = dishes.find((item: DishInfo) => item.id === id)
         console.log(dish)
+
+        dispatch(
+            updateDishByIdAsync(id, {
+                data: { name: dish?.name, price: dish?.price, description: dish?.description },
+                image: JSON.parse(dish?.imagePath || '{}'),
+            }),
+        )
     }
 
     const formatPhotoColumn = (value: DataValueTypes, row: Data) => {

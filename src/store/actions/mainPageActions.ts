@@ -29,6 +29,14 @@ export const getDishesAsync = () => {
     }
 }
 
+export const updateDishByIdAsync = (id: string | number, params: any) => (dispatch, getState) => {
+    const { mainPage } = getState()
+
+    api.dishes.updateDishById(id, params).then(() => {
+        console.log('success')
+    })
+}
+
 export const setDishes = (state: DishInfo[]) => ({
     type: MainPageTypes.SET_DISHES,
     payload: state,
