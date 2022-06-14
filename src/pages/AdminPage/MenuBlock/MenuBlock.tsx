@@ -15,6 +15,7 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined'
 import FormData from 'form-data'
 import { getColumns, getRows } from '@pages/AdminPage/MenuBlock/menuBlockUtils'
 import DishPagination from '@pages/MainPage/CenterBlock/Filtering/DishPagination/DishPagination'
+import LoadingButtonCustom from '@components/Overrides/LoadingButtonCustom'
 
 export default function MenuBlock() {
     const classes = useStyles()
@@ -64,6 +65,8 @@ export default function MenuBlock() {
         dispatch(deleteDishByIdAsync(id))
     }
 
+    const handleAddDishButton = () => {}
+
     const formatPhotoColumn = (value: DataValueTypes, row: Data) => {
         const filename = value?.toString().split('/').pop()
         return filename ? (
@@ -109,6 +112,11 @@ export default function MenuBlock() {
     return (
         <Box className={classes.root}>
             <Box className={classes.container}>
+                <Box className={classes.addDishButton}>
+                    <LoadingButtonCustom onClick={handleAddDishButton} classes={{ root: classes.root }}>
+                        Додати новий запис
+                    </LoadingButtonCustom>
+                </Box>
                 <CustomTable columns={columns} rows={rows} />
             </Box>
             <DishPagination />
@@ -129,11 +137,13 @@ const useStyles = makeStyles(() =>
             display: 'flex',
             flexDirection: 'column',
         },
-        filtersContainer: {
+        addDishButton: {
             display: 'flex',
-            flexDirection: 'row',
-            gap: '20px',
+            justifyContent: 'end',
             marginBottom: '20px',
+            '& .MuiButton-root': {
+                width: '240px',
+            },
         },
         textField: {
             '& .MuiOutlinedInput-root': {
