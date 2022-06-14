@@ -7,6 +7,7 @@ export type ColumnFormat<T> = (
     value: DataValueTypes,
     row: T,
     columnName?: string,
+    field?: string,
 ) => string | JSX.Element | 0 | false | undefined
 export type DataProperty = string | number | boolean | JSX.Element | undefined
 export interface Data extends Record<string, DataProperty> {

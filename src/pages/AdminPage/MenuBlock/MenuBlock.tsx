@@ -1,11 +1,9 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Box, Button, TextField, Typography } from '@mui/material'
-import DishSearchBar from '@pages/MainPage/CenterBlock/Filtering/DishSearchBar/DishSearchBar'
-import DishSortingSelect from '@pages/MainPage/CenterBlock/Filtering/DishSortingSelect/DishSortingSelect'
 import { createStyles, makeStyles } from '@mui/styles'
 import CustomTable, { Column, Data, DataValueTypes } from '@pages/AdminPage/CustomTable/CustomTable'
-import { getColumns, getRows } from '@pages/AdminPage/MenuBlock/menuBlockUtils'
-import { getDishesAsync, setDishInfo, updateDishByIdAsync } from '@redux-actions/mainPageActions'
+import { getColumns, getRows } from '@pages/AdminPage/CenterBlock/centerBlockUtils'
+import { deleteDishByIdAsync, getDishesAsync, setDishInfo, updateDishByIdAsync } from '@redux-actions/mainPageActions'
 import { DishInfo } from '@components/Dishes/dishItemUtils'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import edit from '@assets/img/edit.svg'
@@ -15,10 +13,12 @@ import undo from '@assets/img/undo.svg'
 import picture from '@assets/img/picture.svg'
 import CloseIcon from '@mui/icons-material/Close'
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined'
+import FormData from 'form-data'
 
 export default function MenuBlock() {
     const classes = useStyles()
     const dispatch = useAppDispatch()
+    const data = new FormData()
 
     const dishes: DishInfo[] = useAppSelector((state) => state.mainPage.dishes)
 
@@ -28,13 +28,13 @@ export default function MenuBlock() {
         dispatch(getDishesAsync())
     }, [])
 
-    const formatTextFieldColumn = (value: DataValueTypes, row: Data, columnName?: string) => {
+    const formatTextFieldColumn = (value: DataValueTypes, row: Data, columnName?: string, field?: string) => {
         return (
             <TextField
                 className={classes.textField}
                 placeholder={`${columnName}...`}
                 defaultValue={value}
-                onBlur={(event) => console.log(event.target.value)}
+                onBlur={(event) => dispatch(setDishInfo(+row.id, field || '', event.target.value))}
                 disabled={!editRowIds.includes(row.id)}
                 multiline
                 fullWidth
@@ -48,12 +48,19 @@ export default function MenuBlock() {
         }
         const file = event.target.files[0]
         const { name } = file
-
         dispatch(setDishInfo(id, 'imagePath', name))
+        data.append('image', file)
     }
 
     const handleSaveData = (id: string | number) => {
         setEditRowIds(editRowIds.filter((item: string | number) => item !== id))
+        const { name, description, weight, price } = dishes.find((item: DishInfo) => item.id === id) || {}
+        data.append('data', JSON.stringify({ name, description, weight, price }))
+        dispatch(updateDishByIdAsync(id, { data }))
+    }
+
+    const handleDeleteDish = (id: string | number) => {
+        dispatch(deleteDishByIdAsync(id))
     }
 
     const formatPhotoColumn = (value: DataValueTypes, row: Data) => {
@@ -90,7 +97,7 @@ export default function MenuBlock() {
         ) : (
             <Box className={classes.actionButtons}>
                 <img src={edit} alt="Edit" onClick={() => setEditRowIds([...editRowIds, row.id])} />
-                <img src={remove} alt="Remove" />
+                <img src={remove} alt="Remove" onClick={() => handleDeleteDish(row.id)} />
             </Box>
         )
     }
@@ -101,10 +108,6 @@ export default function MenuBlock() {
     return (
         <Box className={classes.root}>
             <Box className={classes.container}>
-                <Box className={classes.filtersContainer}>
-                    <DishSearchBar />
-                    <DishSortingSelect />
-                </Box>
                 <CustomTable columns={columns} rows={rows} />
             </Box>
         </Box>

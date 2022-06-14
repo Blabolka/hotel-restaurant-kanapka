@@ -29,11 +29,17 @@ export const getDishesAsync = () => {
     }
 }
 
-export const updateDishByIdAsync = (id: string | number, params: any) => (dispatch, getState) => {
-    const { mainPage } = getState()
+export const updateDishByIdAsync = (id: string | number, params: any) => (dispatch) => {
+    api.dishes.updateDishById(id, params).then((response) => {
+        if (response.status === 200) {
+            dispatch(getDishesAsync())
+        }
+    })
+}
 
-    api.dishes.updateDishById(id, params).then(() => {
-        console.log('success')
+export const deleteDishByIdAsync = (id: string | number) => (dispatch) => {
+    api.dishes.deleteDishById(id).then(() => {
+        dispatch(getDishesAsync())
     })
 }
 
