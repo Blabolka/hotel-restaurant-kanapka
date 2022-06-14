@@ -1,6 +1,16 @@
 import { Column, ColumnFormat, Data, DataValueTypes } from '@pages/AdminPage/CustomTable/CustomTable'
 import { DishInfo } from '@components/Dishes/dishItemUtils'
 
+enum TranslateDishTypes {
+    lunch = 'Ланчі',
+    soup = 'Супи',
+    snack = 'Канапки',
+    pizza = 'Піцка',
+    salad = 'Салати',
+    dessert = 'Десерти',
+    drink = 'Напої',
+}
+
 export const getColumns = (
     formatTextFieldColumn: ColumnFormat<Data>,
     formatPhotoColumn: ColumnFormat<Data>,
@@ -51,7 +61,7 @@ export const getColumns = (
 
 const createData = (dish: DishInfo): Data => {
     const { id, name, description, weight, price, imagePath, dishType } = dish
-    return { id, name, description, weight, price, imagePath, dishType }
+    return { id, name, description, weight, price, imagePath, dishType: TranslateDishTypes[dishType] }
 }
 
 export const getRows = (dishes: DishInfo[]): Data[] => dishes.map(createData)
