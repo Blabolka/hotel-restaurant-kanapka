@@ -4,8 +4,13 @@ import { Stack } from '@mui/material'
 
 import StatisticsTabs from '@pages/AdminPage/StatisticsBlock/Tabs/StatisticsTabs'
 import PopularDishes from '@pages/AdminPage/StatisticsBlock/PopularDishesTab/PopularDishesTab'
+import LoadingButtonCustom from '@components/Overrides/LoadingButtonCustom'
+import { exportPopularDishesAsync } from '@redux-actions/oredersActions'
+import { useAppDispatch } from '@hooks'
 
 export default function StatisticsBlock() {
+    const dispatch = useAppDispatch()
+
     const [currentTab, setCurrentTab] = useState<number>(0)
 
     const onTabChange = (event, newSelectedTab: number) => {
@@ -19,9 +24,25 @@ export default function StatisticsBlock() {
         }
     }
 
+    const handleExportButton = () => {
+        dispatch(exportPopularDishesAsync())
+    }
+
     return (
         <Stack>
-            <StatisticsTabs currentTab={currentTab} onTabChange={onTabChange} />
+            <Stack
+                width="100%"
+                display="flex"
+                flexDirection="row"
+                alignItems="center"
+                justifyContent="space-between"
+                marginBottom="20px"
+            >
+                <StatisticsTabs currentTab={currentTab} onTabChange={onTabChange} />
+                <Stack width="240px">
+                    <LoadingButtonCustom onClick={handleExportButton}>Експортувати до файлу</LoadingButtonCustom>
+                </Stack>
+            </Stack>
             {getContentByTabIndex(currentTab)}
         </Stack>
     )

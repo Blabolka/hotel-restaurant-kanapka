@@ -113,9 +113,7 @@ export default function MenuBlock() {
         <Box className={classes.root}>
             <Box className={classes.container}>
                 <Box className={classes.addDishButton}>
-                    <LoadingButtonCustom onClick={handleAddDishButton} classes={{ root: classes.root }}>
-                        Додати новий запис
-                    </LoadingButtonCustom>
+                    <LoadingButtonCustom onClick={handleAddDishButton}>Додати новий запис</LoadingButtonCustom>
                 </Box>
                 <CustomTable columns={columns} rows={rows} />
             </Box>

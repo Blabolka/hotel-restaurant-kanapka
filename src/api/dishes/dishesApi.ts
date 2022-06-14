@@ -30,6 +30,9 @@ export const getDishesApi = (axios: AxiosInstance) => {
 
     const deleteDishById = (id: string | number) => axios.delete(`/admin/dishes/${id}`)
 
+    const exportPopularDishes = (): Promise<AxiosResponse> =>
+        axios.get('/admin/orders/popular/export', { responseType: 'blob' })
+
     return {
         getDishesByIdList,
         getAllDishesPaginated,
@@ -37,5 +40,6 @@ export const getDishesApi = (axios: AxiosInstance) => {
         getPopularDishesPaginated,
         updateDishById,
         deleteDishById,
+        exportPopularDishes,
     }
 }
