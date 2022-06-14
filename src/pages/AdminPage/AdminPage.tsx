@@ -19,7 +19,7 @@ export default function AdminPage() {
 
     const tabItems: TabItem[] = getTabItems()
 
-    const getMainBlockByTabIndex = (tab: number) => {
+    const getMainBlockByTabIndex = (tab: number): JSX.Element | null => {
         switch (tab) {
             case 0:
                 return <MenuBlock />
@@ -27,6 +27,8 @@ export default function AdminPage() {
                 return null
             case 2:
                 return <StatisticsBlock />
+            default:
+                return null
         }
     }
 

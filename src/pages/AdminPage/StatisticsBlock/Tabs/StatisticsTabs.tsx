@@ -11,7 +11,7 @@ interface StatisticsTabsProps {
 
 export default function StatisticsTabs({ currentTab, onTabChange }: StatisticsTabsProps) {
     return (
-        <Box marginBottom="20px">
+        <Box>
             <TabsOverrides value={currentTab} onChange={onTabChange}>
                 {STATISTICS_TABS.map((item, index) => {
                     return <Tab key={index} label={item.label} />

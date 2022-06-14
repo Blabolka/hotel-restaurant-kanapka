@@ -26,7 +26,12 @@ export const getDishesApi = (axios: AxiosInstance) => {
     ): Promise<AxiosResponse<IGetPopularDishesPaginatedResponse>> => axios.get('/admin/orders/popular', { params })
 
     const updateDishById = (id: string | number, params: any): Promise<AxiosResponse> =>
-        axios.patch(`/admin/dishes/${id}`, { params })
+        axios.patch(`/admin/dishes/${id}`, params.data, { headers: { 'Content-Type': 'multipart/form-data' } })
+
+    const deleteDishById = (id: string | number) => axios.delete(`/admin/dishes/${id}`)
+
+    const exportPopularDishes = (): Promise<AxiosResponse> =>
+        axios.get('/admin/orders/popular/export', { responseType: 'blob' })
 
     return {
         getDishesByIdList,
@@ -34,5 +39,7 @@ export const getDishesApi = (axios: AxiosInstance) => {
         getDishesByTypePaginated,
         getPopularDishesPaginated,
         updateDishById,
+        deleteDishById,
+        exportPopularDishes,
     }
 }
