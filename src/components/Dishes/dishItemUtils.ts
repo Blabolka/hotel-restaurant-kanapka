@@ -8,6 +8,11 @@ export interface DishInfo {
     dishType: string
 }
 
+export interface PopularDishInfo {
+    timesOrdered: number
+    dish: DishInfo
+}
+
 export interface DishCartInfo extends DishInfo {
     count: number
 }
