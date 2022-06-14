@@ -8,6 +8,7 @@ import { createStyles, makeStyles } from '@mui/styles'
 
 import DishItemCart from '@components/Dishes/DishItemCart'
 import EmptyState from './EmptyState'
+import ButtonCustom from '@components/Overrides/ButtonCustom'
 
 export default function DishItemsCart() {
     const classes = useStyles()
@@ -41,8 +42,15 @@ export default function DishItemsCart() {
         dispatch(setCart({ ...cart, dishes: newCartDishes }))
     }
 
+    const handleNavigateButton = () => {
+        window.location.href = '/admin'
+    }
+
     return (
         <Stack className={classes.root}>
+            <ButtonCustom classes={{ root: classes.navButton }} onClick={handleNavigateButton}>
+                Перейти до панелі управління
+            </ButtonCustom>
             <span className="font-size-18px color-secondary">Ваше замовлення</span>
             {cart.dishes.length ? (
                 <Stack className={classes.dishesContainer}>
@@ -75,6 +83,15 @@ const useStyles = makeStyles(() =>
             gap: '24px',
             marginTop: '18px',
             overflow: 'scroll',
+        },
+        navButton: {
+            height: '30px',
+            fontWeight: 400,
+            marginBottom: '20px',
+            backgroundColor: '#F8AC1B',
+            '&:hover': {
+                backgroundColor: '#D1D1D1',
+            },
         },
     }),
 )
