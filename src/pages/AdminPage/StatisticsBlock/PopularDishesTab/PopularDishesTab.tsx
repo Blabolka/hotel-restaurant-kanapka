@@ -28,7 +28,7 @@ export default function PopularDishesTab() {
     }, [pagination.page])
 
     return (
-        <Stack gap="20px">
+        <Stack alignItems="center" gap="20px">
             <CustomTable columns={tableColumns} rows={tableRows} />
             <PaginationCustom page={pagination.page} count={pagination.totalPages} onChange={onPaginationPageChange} />
         </Stack>

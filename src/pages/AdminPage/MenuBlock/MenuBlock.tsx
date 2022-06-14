@@ -14,6 +14,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined'
 import FormData from 'form-data'
 import { getColumns, getRows } from '@pages/AdminPage/MenuBlock/menuBlockUtils'
+import DishPagination from '@pages/MainPage/CenterBlock/Filtering/DishPagination/DishPagination'
 
 export default function MenuBlock() {
     const classes = useStyles()
@@ -110,6 +111,7 @@ export default function MenuBlock() {
             <Box className={classes.container}>
                 <CustomTable columns={columns} rows={rows} />
             </Box>
+            <DishPagination />
         </Box>
     )
 }
@@ -118,6 +120,10 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '20px',
         },
         container: {
             display: 'flex',
