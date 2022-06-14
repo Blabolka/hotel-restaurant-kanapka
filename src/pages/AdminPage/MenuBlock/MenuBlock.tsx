@@ -2,7 +2,6 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Box, Button, TextField, Typography } from '@mui/material'
 import { createStyles, makeStyles } from '@mui/styles'
 import CustomTable, { Column, Data, DataValueTypes } from '@pages/AdminPage/CustomTable/CustomTable'
-import { getColumns, getRows } from '@pages/AdminPage/CenterBlock/centerBlockUtils'
 import { deleteDishByIdAsync, getDishesAsync, setDishInfo, updateDishByIdAsync } from '@redux-actions/mainPageActions'
 import { DishInfo } from '@components/Dishes/dishItemUtils'
 import { useAppDispatch, useAppSelector } from '@hooks'
@@ -14,6 +13,7 @@ import picture from '@assets/img/picture.svg'
 import CloseIcon from '@mui/icons-material/Close'
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined'
 import FormData from 'form-data'
+import { getColumns, getRows } from '@pages/AdminPage/MenuBlock/menuBlockUtils'
 
 export default function MenuBlock() {
     const classes = useStyles()

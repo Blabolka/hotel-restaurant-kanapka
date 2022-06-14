@@ -24,7 +24,7 @@ export default function AdminPage() {
             case 0:
                 return <MenuBlock />
             case 1:
-                return null
+                return <></>
             case 2:
                 return <StatisticsBlock />
         }
