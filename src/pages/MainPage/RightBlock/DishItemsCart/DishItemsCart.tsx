@@ -9,10 +9,13 @@ import { createStyles, makeStyles } from '@mui/styles'
 import DishItemCart from '@components/Dishes/DishItemCart'
 import EmptyState from './EmptyState'
 import ButtonCustom from '@components/Overrides/ButtonCustom'
+import { useNavigate } from 'react-router-dom'
 
 export default function DishItemsCart() {
     const classes = useStyles()
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+
     const cart = useAppSelector((state) => state.mainPage.cart)
 
     const onCounterDecreaseClick = (dishId: number) => {
@@ -43,7 +46,7 @@ export default function DishItemsCart() {
     }
 
     const handleNavigateButton = () => {
-        window.location.href = '/admin'
+        navigate('/admin')
     }
 
     return (
