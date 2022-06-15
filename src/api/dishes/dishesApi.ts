@@ -28,6 +28,9 @@ export const getDishesApi = (axios: AxiosInstance) => {
     const updateDishById = (id: string | number, params: any): Promise<AxiosResponse> =>
         axios.patch(`/admin/dishes/${id}`, params.data, { headers: { 'Content-Type': 'multipart/form-data' } })
 
+    const addDish = (params: any): Promise<AxiosResponse> =>
+        axios.post(`/admin/dishes`, params.data, { headers: { 'Content-Type': 'multipart/form-data' } })
+
     const deleteDishById = (id: string | number) => axios.delete(`/admin/dishes/${id}`)
 
     const exportPopularDishes = (): Promise<AxiosResponse> =>
@@ -39,6 +42,7 @@ export const getDishesApi = (axios: AxiosInstance) => {
         getDishesByTypePaginated,
         getPopularDishesPaginated,
         updateDishById,
+        addDish,
         deleteDishById,
         exportPopularDishes,
     }

@@ -37,6 +37,14 @@ export const updateDishByIdAsync = (id: string | number, params: any) => (dispat
     })
 }
 
+export const addDishAsync = (params: any) => (dispatch) => {
+    api.dishes.addDish(params).then((response) => {
+        if (response.status === 200) {
+            dispatch(getDishesAsync())
+        }
+    })
+}
+
 export const deleteDishByIdAsync = (id: string | number) => (dispatch) => {
     api.dishes.deleteDishById(id).then(() => {
         dispatch(getDishesAsync())
@@ -117,4 +125,12 @@ export const setDishInfo = (id: number, field: string, value: string) => ({
         field,
         value,
     },
+})
+
+export const addDishInfo = () => ({
+    type: MainPageTypes.ADD_DISH_INFO,
+})
+
+export const removeDishInfo = () => ({
+    type: MainPageTypes.REMOVE_DISH_INFO,
 })

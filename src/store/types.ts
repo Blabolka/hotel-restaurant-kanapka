@@ -13,4 +13,7 @@ export enum MainPageTypes {
 
     SET_DISH_TYPE = 'mainPage/dishType/set',
     SET_DISH_INFO = 'mainPage/dishInfo/set',
+
+    ADD_DISH_INFO = 'admin/dishInfo/add',
+    REMOVE_DISH_INFO = 'admin/dishInfo/remove',
 }
