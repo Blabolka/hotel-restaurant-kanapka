@@ -38,11 +38,16 @@ export const updateDishByIdAsync = (id: string | number, params: any) => (dispat
 }
 
 export const addDishAsync = (params: any) => (dispatch) => {
-    api.dishes.addDish(params).then((response) => {
-        if (response.status === 200) {
-            dispatch(getDishesAsync())
-        }
-    })
+    api.dishes
+        .addDish(params)
+        .then((response) => {
+            if (response.status === 200) {
+                dispatch(getDishesAsync())
+            }
+        })
+        .catch(() => {
+            dispatch(removeDishInfo())
+        })
 }
 
 export const deleteDishByIdAsync = (id: string | number) => (dispatch) => {

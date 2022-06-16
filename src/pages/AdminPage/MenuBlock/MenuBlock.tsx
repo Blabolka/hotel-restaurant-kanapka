@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Box, Button, TextField, Typography } from '@mui/material'
+import { Box, Button, MenuItem, Select, TextField, Typography } from '@mui/material'
 import { createStyles, makeStyles } from '@mui/styles'
 import CustomTable, { Column, Data, DataValueTypes } from '@pages/AdminPage/CustomTable/CustomTable'
 import {
@@ -21,10 +21,12 @@ import picture from '@assets/img/picture.svg'
 import CloseIcon from '@mui/icons-material/Close'
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined'
 import FormData from 'form-data'
-import { getColumns, getRows } from '@pages/AdminPage/MenuBlock/menuBlockUtils'
+import { getColumns, getRows, TranslateDishTypes } from '@pages/AdminPage/MenuBlock/menuBlockUtils'
 import DishPagination from '@pages/MainPage/CenterBlock/Filtering/DishPagination/DishPagination'
 import LoadingButtonCustom from '@components/Overrides/LoadingButtonCustom'
 import ButtonCustom from '@components/Overrides/ButtonCustom'
+import { dishTypes } from '@components/TabContainer/tabContainerUtils'
+import { ExpandMore } from '@mui/icons-material'
 
 export default function MenuBlock() {
     const classes = useStyles()
@@ -49,6 +51,7 @@ export default function MenuBlock() {
                 defaultValue={value}
                 onBlur={(event) => dispatch(setDishInfo(+row.id, field || '', event.target.value))}
                 disabled={!editRowIds.includes(row.id)}
+                error={!!value}
                 multiline
                 fullWidth
             />
@@ -95,10 +98,12 @@ export default function MenuBlock() {
         const filename = value?.toString().split('/').pop()
         return filename ? (
             <Box className={classes.fileContainer}>
-                <Box className={classes.loadedFile}>
-                    <img src={picture} alt="Picture" />
-                    <Typography variant="body2">{filename}</Typography>
-                </Box>
+                <a href={value?.toString()}>
+                    <Box className={classes.loadedFile}>
+                        <img src={picture} alt="Picture" />
+                        <Typography variant="body2">{filename}</Typography>
+                    </Box>
+                </a>
                 {editRowIds.includes(row.id) && (
                     <CloseIcon onClick={() => dispatch(setDishInfo(+row.id, 'imagePath', ''))} fontSize="small" />
                 )}
@@ -107,8 +112,28 @@ export default function MenuBlock() {
             <Button className={classes.downloadButton} component="label">
                 <Typography variant="body2">Завантажити</Typography>
                 <FileDownloadOutlinedIcon fontSize="small" />
-                <input type="file" hidden onChange={(event) => handleFileUpload(event, +row.id)} />
+                <input accept="image/*" type="file" hidden onChange={(event) => handleFileUpload(event, +row.id)} />
             </Button>
+        )
+    }
+
+    const formatSelectColumn = (value: DataValueTypes, row: Data) => {
+        return row.id === 0 ? (
+            <Box className={classes.select}>
+                <Select
+                    value={row.dishType}
+                    onChange={(event) => dispatch(setDishInfo(+row.id, 'dishType', event.target.value as string))}
+                    IconComponent={ExpandMore}
+                >
+                    {dishTypes.slice(1).map((item: string) => (
+                        <MenuItem key={item} value={item} className={classes.menuItem}>
+                            {TranslateDishTypes[item]}
+                        </MenuItem>
+                    ))}
+                </Select>
+            </Box>
+        ) : (
+            <>{TranslateDishTypes[row.dishType as string]}</>
         )
     }
 
@@ -132,7 +157,7 @@ export default function MenuBlock() {
         )
     }
 
-    const columns: Column[] = getColumns(formatTextFieldColumn, formatPhotoColumn, createActions)
+    const columns: Column[] = getColumns(formatTextFieldColumn, formatPhotoColumn, formatSelectColumn, createActions)
     const rows: Data[] = getRows(dishes)
 
     return (
@@ -153,7 +178,7 @@ export default function MenuBlock() {
                 </Box>
                 <CustomTable columns={columns} rows={rows} />
             </Box>
-            <DishPagination />
+            <DishPagination disabled={addMode} />
         </Box>
     )
 }
@@ -228,6 +253,26 @@ const useStyles = makeStyles(() =>
                 whiteSpace: 'nowrap',
                 textOverflow: 'ellipsis',
             },
+        },
+        select: {
+            '& .MuiOutlinedInput-root': {
+                width: '90px',
+                '& .MuiSelect-select': {
+                    padding: 0,
+                    fontSize: '14px',
+                    fontWeight: 400,
+                },
+                '& fieldset': {
+                    border: 'none',
+                },
+                '& svg': {
+                    color: 'black',
+                },
+            },
+        },
+        menuItem: {
+            fontSize: '14px',
+            fontWeight: 400,
         },
         actionButtons: {
             display: 'flex',
