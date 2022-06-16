@@ -1,8 +1,16 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Box, Button, TextField, Typography } from '@mui/material'
+import { Box, Button, MenuItem, Select, TextField, Typography } from '@mui/material'
 import { createStyles, makeStyles } from '@mui/styles'
 import CustomTable, { Column, Data, DataValueTypes } from '@pages/AdminPage/CustomTable/CustomTable'
-import { deleteDishByIdAsync, getDishesAsync, setDishInfo, updateDishByIdAsync } from '@redux-actions/mainPageActions'
+import {
+    addDishAsync,
+    addDishInfo,
+    deleteDishByIdAsync,
+    getDishesAsync,
+    removeDishInfo,
+    setDishInfo,
+    updateDishByIdAsync,
+} from '@redux-actions/mainPageActions'
 import { DishInfo } from '@components/Dishes/dishItemUtils'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import edit from '@assets/img/edit.svg'
@@ -13,9 +21,12 @@ import picture from '@assets/img/picture.svg'
 import CloseIcon from '@mui/icons-material/Close'
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined'
 import FormData from 'form-data'
-import { getColumns, getRows } from '@pages/AdminPage/MenuBlock/menuBlockUtils'
+import { getColumns, getRows, TranslateDishTypes } from '@pages/AdminPage/MenuBlock/menuBlockUtils'
 import DishPagination from '@pages/MainPage/CenterBlock/Filtering/DishPagination/DishPagination'
 import LoadingButtonCustom from '@components/Overrides/LoadingButtonCustom'
+import ButtonCustom from '@components/Overrides/ButtonCustom'
+import { dishTypes } from '@components/TabContainer/tabContainerUtils'
+import { ExpandMore } from '@mui/icons-material'
 
 export default function MenuBlock() {
     const classes = useStyles()
@@ -25,6 +36,8 @@ export default function MenuBlock() {
     const dishes: DishInfo[] = useAppSelector((state) => state.mainPage.dishes)
 
     const [editRowIds, setEditRowIds] = useState<(string | number)[]>([])
+    const [addMode, setAddMode] = useState<boolean>(false)
+    const [files, setFiles] = useState<Record<string, File>>({})
 
     useEffect(() => {
         dispatch(getDishesAsync())
@@ -38,6 +51,7 @@ export default function MenuBlock() {
                 defaultValue={value}
                 onBlur={(event) => dispatch(setDishInfo(+row.id, field || '', event.target.value))}
                 disabled={!editRowIds.includes(row.id)}
+                error={!!value}
                 multiline
                 fullWidth
             />
@@ -50,31 +64,46 @@ export default function MenuBlock() {
         }
         const file = event.target.files[0]
         const { name } = file
+        setFiles({ ...files, [id]: file })
         dispatch(setDishInfo(id, 'imagePath', name))
-        data.append('image', file)
     }
 
     const handleSaveData = (id: string | number) => {
+        setAddMode(false)
         setEditRowIds(editRowIds.filter((item: string | number) => item !== id))
         const { name, description, weight, price } = dishes.find((item: DishInfo) => item.id === id) || {}
-        data.append('data', JSON.stringify({ name, description, weight, price }))
-        dispatch(updateDishByIdAsync(id, { data }))
+        data.append('image', files[id])
+        data.append('data', JSON.stringify({ name, description, weight, price, dishType: 'pizza' }))
+        addMode ? dispatch(addDishAsync({ data })) : dispatch(updateDishByIdAsync(id, { data }))
+        delete files[id]
     }
 
     const handleDeleteDish = (id: string | number) => {
         dispatch(deleteDishByIdAsync(id))
     }
 
-    const handleAddDishButton = () => {}
+    const handleAddDishButton = () => {
+        setAddMode(true)
+        setEditRowIds([...editRowIds, 0])
+        dispatch(addDishInfo())
+    }
+
+    const handleCancelButton = () => {
+        setAddMode(false)
+        setEditRowIds(editRowIds.filter((item: string | number) => item !== 0))
+        dispatch(removeDishInfo())
+    }
 
     const formatPhotoColumn = (value: DataValueTypes, row: Data) => {
         const filename = value?.toString().split('/').pop()
         return filename ? (
             <Box className={classes.fileContainer}>
-                <Box className={classes.loadedFile}>
-                    <img src={picture} alt="Picture" />
-                    <Typography variant="body2">{filename}</Typography>
-                </Box>
+                <a href={value?.toString()}>
+                    <Box className={classes.loadedFile}>
+                        <img src={picture} alt="Picture" />
+                        <Typography variant="body2">{filename}</Typography>
+                    </Box>
+                </a>
                 {editRowIds.includes(row.id) && (
                     <CloseIcon onClick={() => dispatch(setDishInfo(+row.id, 'imagePath', ''))} fontSize="small" />
                 )}
@@ -83,8 +112,28 @@ export default function MenuBlock() {
             <Button className={classes.downloadButton} component="label">
                 <Typography variant="body2">Завантажити</Typography>
                 <FileDownloadOutlinedIcon fontSize="small" />
-                <input type="file" hidden onChange={(event) => handleFileUpload(event, +row.id)} />
+                <input accept="image/*" type="file" hidden onChange={(event) => handleFileUpload(event, +row.id)} />
             </Button>
+        )
+    }
+
+    const formatSelectColumn = (value: DataValueTypes, row: Data) => {
+        return row.id === 0 ? (
+            <Box className={classes.select}>
+                <Select
+                    value={row.dishType}
+                    onChange={(event) => dispatch(setDishInfo(+row.id, 'dishType', event.target.value as string))}
+                    IconComponent={ExpandMore}
+                >
+                    {dishTypes.slice(1).map((item: string) => (
+                        <MenuItem key={item} value={item} className={classes.menuItem}>
+                            {TranslateDishTypes[item]}
+                        </MenuItem>
+                    ))}
+                </Select>
+            </Box>
+        ) : (
+            <>{TranslateDishTypes[row.dishType as string]}</>
         )
     }
 
@@ -92,11 +141,13 @@ export default function MenuBlock() {
         return editRowIds.includes(row.id) ? (
             <Box className={classes.actionButtons}>
                 <img src={save} alt="Save" onClick={() => handleSaveData(row.id)} />
-                <img
-                    src={undo}
-                    alt="Undo"
-                    onClick={() => setEditRowIds(editRowIds.filter((item: string | number) => item !== row.id))}
-                />
+                {!editRowIds.includes(0) && (
+                    <img
+                        src={undo}
+                        alt="Undo"
+                        onClick={() => setEditRowIds(editRowIds.filter((item: string | number) => item !== row.id))}
+                    />
+                )}
             </Box>
         ) : (
             <Box className={classes.actionButtons}>
@@ -106,18 +157,28 @@ export default function MenuBlock() {
         )
     }
 
-    const columns: Column[] = getColumns(formatTextFieldColumn, formatPhotoColumn, createActions)
+    const columns: Column[] = getColumns(formatTextFieldColumn, formatPhotoColumn, formatSelectColumn, createActions)
     const rows: Data[] = getRows(dishes)
 
     return (
         <Box className={classes.root}>
             <Box className={classes.container}>
                 <Box className={classes.addDishButton}>
-                    <LoadingButtonCustom onClick={handleAddDishButton}>Додати новий запис</LoadingButtonCustom>
+                    {!addMode ? (
+                        <LoadingButtonCustom onClick={handleAddDishButton}>Додати новий запис</LoadingButtonCustom>
+                    ) : (
+                        <ButtonCustom
+                            classes={{ root: classes.cancelButton }}
+                            variant="outlined"
+                            onClick={handleCancelButton}
+                        >
+                            Відмінити додавання
+                        </ButtonCustom>
+                    )}
                 </Box>
                 <CustomTable columns={columns} rows={rows} />
             </Box>
-            <DishPagination />
+            <DishPagination disabled={addMode} />
         </Box>
     )
 }
@@ -142,6 +203,9 @@ const useStyles = makeStyles(() =>
             '& .MuiButton-root': {
                 width: '240px',
             },
+        },
+        cancelButton: {
+            fontWeight: 400,
         },
         textField: {
             '& .MuiOutlinedInput-root': {
@@ -189,6 +253,26 @@ const useStyles = makeStyles(() =>
                 whiteSpace: 'nowrap',
                 textOverflow: 'ellipsis',
             },
+        },
+        select: {
+            '& .MuiOutlinedInput-root': {
+                width: '90px',
+                '& .MuiSelect-select': {
+                    padding: 0,
+                    fontSize: '14px',
+                    fontWeight: 400,
+                },
+                '& fieldset': {
+                    border: 'none',
+                },
+                '& svg': {
+                    color: 'black',
+                },
+            },
+        },
+        menuItem: {
+            fontSize: '14px',
+            fontWeight: 400,
         },
         actionButtons: {
             display: 'flex',

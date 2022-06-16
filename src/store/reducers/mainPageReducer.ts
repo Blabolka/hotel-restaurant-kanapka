@@ -80,6 +80,28 @@ const paginationReducer = (state = initialState, action) => {
             }
         }
 
+        case MainPageTypes.ADD_DISH_INFO: {
+            return {
+                ...state,
+                dishes: [
+                    {
+                        id: 0,
+                        name: '',
+                        description: '',
+                        weight: 0,
+                        price: 0,
+                        imagePath: '',
+                        dishType: 'pizza',
+                    },
+                    ...state.dishes,
+                ],
+            }
+        }
+
+        case MainPageTypes.REMOVE_DISH_INFO: {
+            return { ...state, dishes: state.dishes.filter((item) => item.id !== 0) }
+        }
+
         default: {
             return state
         }

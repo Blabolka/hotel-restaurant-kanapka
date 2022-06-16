@@ -5,7 +5,11 @@ import { setPagination, getDishesAsync } from '@redux-actions/mainPageActions'
 
 import PaginationCustom from '@components/Overrides/PaginationCustom'
 
-const DishPagination = () => {
+interface DishPagination {
+    disabled?: boolean
+}
+
+const DishPagination = ({ disabled }: DishPagination) => {
     const dispatch = useAppDispatch()
     const pagination = useAppSelector((state) => state.mainPage.pagination)
 
@@ -17,7 +21,12 @@ const DishPagination = () => {
     }
 
     return pagination.totalPages > 0 ? (
-        <PaginationCustom page={pagination.page} count={pagination.totalPages} onChange={onPaginationPageChange} />
+        <PaginationCustom
+            page={pagination.page}
+            count={pagination.totalPages}
+            onChange={onPaginationPageChange}
+            disabled={disabled || false}
+        />
     ) : null
 }
 

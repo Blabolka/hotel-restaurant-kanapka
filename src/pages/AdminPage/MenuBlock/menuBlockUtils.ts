@@ -1,7 +1,7 @@
 import { Column, ColumnFormat, Data, DataValueTypes } from '@pages/AdminPage/CustomTable/CustomTable'
 import { DishInfo } from '@components/Dishes/dishItemUtils'
 
-enum TranslateDishTypes {
+export enum TranslateDishTypes {
     lunch = 'Ланчі',
     soup = 'Супи',
     snack = 'Канапки',
@@ -14,6 +14,7 @@ enum TranslateDishTypes {
 export const getColumns = (
     formatTextFieldColumn: ColumnFormat<Data>,
     formatPhotoColumn: ColumnFormat<Data>,
+    formatSelectColumn: ColumnFormat<Data>,
     createActions: ColumnFormat<Data>,
 ): Column[] => [
     {
@@ -50,6 +51,7 @@ export const getColumns = (
         id: 'dishType',
         label: 'Категорія',
         minWidth: 110,
+        format: (value: DataValueTypes, row: Data) => formatSelectColumn(value, row, 'Категорія', 'dishType'),
     },
     {
         id: 'actions',
@@ -61,7 +63,7 @@ export const getColumns = (
 
 const createData = (dish: DishInfo): Data => {
     const { id, name, description, weight, price, imagePath, dishType } = dish
-    return { id, name, description, weight, price, imagePath, dishType: TranslateDishTypes[dishType] }
+    return { id, name, description, weight, price, imagePath, dishType: dishType }
 }
 
 export const getRows = (dishes: DishInfo[]): Data[] => dishes.map(createData)
