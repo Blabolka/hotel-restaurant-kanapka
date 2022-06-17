@@ -1,3 +1,7 @@
+export enum OrdersTypes {
+    SET_ORDERS = 'orders/set',
+}
+
 export enum MainPageTypes {
     SET_DISHES = 'mainPage/dishes/set',
 

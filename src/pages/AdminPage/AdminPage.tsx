@@ -6,6 +6,7 @@ import { getTabItems } from '@pages/AdminPage/adminPageUtils'
 
 import NavigationPanel from '@components/NavigationPanel/NavigationPanel'
 import MenuBlock from '@pages/AdminPage/MenuBlock/MenuBlock'
+import OrdersBlock from '@pages/AdminPage/OrdersBlock/OrdersBlock'
 import StatisticsBlock from '@pages/AdminPage/StatisticsBlock/StatisticsBlock'
 
 export default function AdminPage() {
@@ -24,7 +25,7 @@ export default function AdminPage() {
             case 0:
                 return <MenuBlock />
             case 1:
-                return null
+                return <OrdersBlock />
             case 2:
                 return <StatisticsBlock />
             default:

@@ -1,4 +1,4 @@
-import { Column, ColumnFormat, Data, DataValueTypes } from '@pages/AdminPage/CustomTable/CustomTable'
+import { Column, ColumnFormat, Data, DataValueTypes } from '@components/CustomTable/CustomTable'
 import { DishInfo } from '@components/Dishes/dishItemUtils'
 
 export enum TranslateDishTypes {

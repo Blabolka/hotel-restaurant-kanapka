@@ -8,6 +8,7 @@ import {
     differenceInMinutes,
     isSameDay,
     setSeconds,
+    format,
 } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
 
@@ -86,4 +87,8 @@ export const getMaxDeliveryDate = () => {
 
 export const getMaxDeliveryTime = (selectedDeliveryDate: Date) => {
     return getWorkDayFinishInCorrectTimezone(selectedDeliveryDate)
+}
+
+export const formatDate = (date: Date | number) => {
+    return format(date, 'dd.MM.yyyy HH:mm')
 }

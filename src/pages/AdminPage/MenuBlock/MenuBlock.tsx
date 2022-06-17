@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Box, Button, MenuItem, Select, TextField, Typography } from '@mui/material'
 import { createStyles, makeStyles } from '@mui/styles'
-import CustomTable, { Column, Data, DataValueTypes } from '@pages/AdminPage/CustomTable/CustomTable'
+import CustomTable, { Column, Data, DataValueTypes } from '@components/CustomTable/CustomTable'
 import {
     addDishAsync,
     addDishInfo,
