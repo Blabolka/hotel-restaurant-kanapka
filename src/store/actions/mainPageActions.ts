@@ -29,6 +29,33 @@ export const getDishesAsync = () => {
     }
 }
 
+export const updateDishByIdAsync = (id: string | number, params: any) => (dispatch) => {
+    api.dishes.updateDishById(id, params).then((response) => {
+        if (response.status === 200) {
+            dispatch(getDishesAsync())
+        }
+    })
+}
+
+export const addDishAsync = (params: any) => (dispatch) => {
+    api.dishes
+        .addDish(params)
+        .then((response) => {
+            if (response.status === 200) {
+                dispatch(getDishesAsync())
+            }
+        })
+        .catch(() => {
+            dispatch(removeDishInfo())
+        })
+}
+
+export const deleteDishByIdAsync = (id: string | number) => (dispatch) => {
+    api.dishes.deleteDishById(id).then(() => {
+        dispatch(getDishesAsync())
+    })
+}
+
 export const setDishes = (state: DishInfo[]) => ({
     type: MainPageTypes.SET_DISHES,
     payload: state,
@@ -94,4 +121,21 @@ export const setSortingSelect = (state: string) => ({
 export const setDishesType = (state: string) => ({
     type: MainPageTypes.SET_DISH_TYPE,
     payload: state,
+})
+
+export const setDishInfo = (id: number, field: string, value: string) => ({
+    type: MainPageTypes.SET_DISH_INFO,
+    payload: {
+        id,
+        field,
+        value,
+    },
+})
+
+export const addDishInfo = () => ({
+    type: MainPageTypes.ADD_DISH_INFO,
+})
+
+export const removeDishInfo = () => ({
+    type: MainPageTypes.REMOVE_DISH_INFO,
 })

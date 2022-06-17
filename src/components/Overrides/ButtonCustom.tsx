@@ -14,12 +14,21 @@ const useStyles = makeStyles(() =>
             color: '#000000',
             borderRadius: '20px',
             textTransform: 'none',
-
+            boxShadow: 'none',
+            '&:hover': {
+                boxShadow: 'none',
+            },
             '&.MuiButton-contained': {
                 backgroundColor: '#F8AC1B',
+                '&:hover': {
+                    backgroundColor: '#D1D1D1',
+                },
             },
             '&.MuiButton-outlined': {
                 borderColor: '#F8AC1B',
+                '&:hover': {
+                    backgroundColor: '#F8AC1B',
+                },
             },
         },
     }),

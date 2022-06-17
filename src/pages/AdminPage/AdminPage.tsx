@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { createStyles, makeStyles } from '@mui/styles'
 import { Box } from '@mui/material'
-import NavigationPanel from '@components/NavigationPanel/NavigationPanel'
-import CenterBlock from '@pages/AdminPage/CenterBlock/CenterBlock'
 import { TabItem } from '@components/TabContainer/tabContainerUtils'
 import { getTabItems } from '@pages/AdminPage/adminPageUtils'
+
+import NavigationPanel from '@components/NavigationPanel/NavigationPanel'
+import MenuBlock from '@pages/AdminPage/MenuBlock/MenuBlock'
+import StatisticsBlock from '@pages/AdminPage/StatisticsBlock/StatisticsBlock'
 
 export default function AdminPage() {
     const classes = useStyles()
@@ -17,12 +19,24 @@ export default function AdminPage() {
 
     const tabItems: TabItem[] = getTabItems()
 
+    const getMainBlockByTabIndex = (tab: number): JSX.Element | null => {
+        switch (tab) {
+            case 0:
+                return <MenuBlock />
+            case 1:
+                return null
+            case 2:
+                return <StatisticsBlock />
+            default:
+                return null
+        }
+    }
+
     return (
         <Box className={classes.root}>
             <Box className={classes.container}>
                 <NavigationPanel title="Управління" items={tabItems} openedTab={openedTab} onTabChange={onTabChange} />
-                <CenterBlock />
-                <Box className={classes.orderContainer}>Right side</Box>
+                {getMainBlockByTabIndex(openedTab)}
             </Box>
         </Box>
     )
@@ -40,11 +54,6 @@ const useStyles = makeStyles(() =>
         container: {
             display: 'flex',
             gap: '20px',
-        },
-        orderContainer: {
-            minWidth: '360px',
-            background: 'white',
-            borderRadius: '30px',
         },
     }),
 )

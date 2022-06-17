@@ -1,6 +1,11 @@
 import { AxiosResponse, AxiosInstance } from 'axios'
 import { DishInfo } from '@components/Dishes/dishItemUtils'
-import { IGetAllDishesPaginatedParams, IGetAllDishesPaginatedResponse } from './dishesApiUtils'
+import {
+    IGetAllDishesPaginatedParams,
+    IGetAllDishesPaginatedResponse,
+    IGetPopularDishesPaginatedResponse,
+    IPaginationParams,
+} from './dishesApiUtils'
 
 export const getDishesApi = (axios: AxiosInstance) => {
     const getDishesByIdList = (body: number[]): Promise<AxiosResponse<DishInfo[]>> => {
@@ -16,9 +21,29 @@ export const getDishesApi = (axios: AxiosInstance) => {
         params: IGetAllDishesPaginatedParams,
     ): Promise<AxiosResponse<IGetAllDishesPaginatedResponse>> => axios.get(`/dishes/${dishType}`, { params })
 
+    const getPopularDishesPaginated = (
+        params: IPaginationParams,
+    ): Promise<AxiosResponse<IGetPopularDishesPaginatedResponse>> => axios.get('/admin/orders/popular', { params })
+
+    const updateDishById = (id: string | number, params: any): Promise<AxiosResponse> =>
+        axios.patch(`/admin/dishes/${id}`, params.data, { headers: { 'Content-Type': 'multipart/form-data' } })
+
+    const addDish = (params: any): Promise<AxiosResponse> =>
+        axios.post(`/admin/dishes`, params.data, { headers: { 'Content-Type': 'multipart/form-data' } })
+
+    const deleteDishById = (id: string | number) => axios.delete(`/admin/dishes/${id}`)
+
+    const exportPopularDishes = (): Promise<AxiosResponse> =>
+        axios.get('/admin/orders/popular/export', { responseType: 'blob' })
+
     return {
         getDishesByIdList,
         getAllDishesPaginated,
         getDishesByTypePaginated,
+        getPopularDishesPaginated,
+        updateDishById,
+        addDish,
+        deleteDishById,
+        exportPopularDishes,
     }
 }

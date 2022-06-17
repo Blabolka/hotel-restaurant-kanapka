@@ -20,7 +20,11 @@ const useStyles = makeStyles(() =>
             color: '#000000',
             backgroundColor: '#F8AC1B',
             borderRadius: '20px',
+            fontWeight: 400,
             textTransform: 'none',
+            '&:hover': {
+                backgroundColor: '#D1D1D1',
+            },
         },
     }),
 )

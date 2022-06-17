@@ -2,18 +2,21 @@ import { Box, Typography } from '@mui/material'
 import logo from '@assets/img/logo.svg'
 import React from 'react'
 import { createStyles, makeStyles } from '@mui/styles'
+import { Link } from 'react-router-dom'
 
 export default function Logo() {
     const classes = useStyles()
 
     return (
-        <Box className={classes.root}>
-            <img className="" src={logo} alt="Logo" />
-            <Box>
-                <Typography className={classes.mainText}>Канапка</Typography>
-                <Typography className={classes.descriptionText}>готель-ресторан</Typography>
+        <Link to="/">
+            <Box className={classes.root}>
+                <img className="" src={logo} alt="Logo" />
+                <Box>
+                    <Typography className={classes.mainText}>Канапка</Typography>
+                    <Typography className={classes.descriptionText}>готель-ресторан</Typography>
+                </Box>
             </Box>
-        </Box>
+        </Link>
     )
 }
 
