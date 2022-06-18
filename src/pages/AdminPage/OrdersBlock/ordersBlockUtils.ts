@@ -17,16 +17,26 @@ export const getColumns = (): Column[] => {
             label: 'Термінове',
         },
         {
+            id: 'confirmed',
+            label: 'Підтверджене',
+        },
+        {
+            id: 'cancelled',
+            label: 'Відмінене',
+        },
+        {
             id: 'done',
             label: 'Виконане',
         },
         {
             id: 'orderedAt',
             label: 'Дата замовлення',
+            minWidth: 150,
         },
         {
             id: 'expectedAt',
             label: 'Дата очікування',
+            minWidth: 150,
         },
     ]
 }
@@ -36,6 +46,8 @@ interface OrderInfo {
     dishes: PopularDishInfo[]
     bill: number
     urgent: boolean
+    confirmed: boolean
+    cancelled: boolean
     done: boolean
     orderedAt: number
     expectedAt: number
@@ -50,13 +62,15 @@ const getOrderBillInfoString = (bill: number) => {
 
 export const getRows = (orders: OrderInfo[]): Data[] => {
     return orders.map((item) => {
-        const { id, dishes, bill, urgent, done, orderedAt, expectedAt } = item
+        const { id, dishes, bill, urgent, confirmed, cancelled, done, orderedAt, expectedAt } = item
 
         return {
             id,
             dishes: getOrderDishesInfoString(dishes),
             bill: getOrderBillInfoString(bill),
             urgent: String(urgent),
+            confirmed: String(confirmed),
+            cancelled: String(cancelled),
             done: String(done),
             orderedAt: formatDate(orderedAt),
             expectedAt: formatDate(expectedAt),

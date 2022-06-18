@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { setCart } from '@redux-actions/mainPageActions'
+import { setCart } from '@redux-actions/pageActions'
 
 import { Stack } from '@mui/material'
 import DishItemBlock from '@components/Dishes/DishItemBlock'
@@ -9,8 +9,8 @@ import { DishInfo } from '@components/Dishes/dishItemUtils'
 
 const DishItemsGrid = () => {
     const dispatch = useAppDispatch()
-    const dishes: DishInfo[] = useAppSelector((state) => state.mainPage.dishes)
-    const cart = useAppSelector((state) => state.mainPage.cart)
+    const dishes: DishInfo[] = useAppSelector((state) => state.page.dishes)
+    const cart = useAppSelector((state) => state.page.cart)
 
     const onAddDishButtonClick = (dishId: number) => {
         const cartDishes = [...cart.dishes]

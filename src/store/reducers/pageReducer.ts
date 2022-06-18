@@ -1,4 +1,4 @@
-import { MainPageTypes } from '../types'
+import { PAGE_TYPES } from '../types'
 
 import { DishInfo, DishCartInfo } from '@components/Dishes/dishItemUtils'
 import { DELIVERY_MODE_VALUES } from '@pages/MainPage/RightBlock/Delivery/deliveryModeSwitcherUtils'
@@ -31,56 +31,44 @@ const initialState: initialStateTypes = {
     dishType: '',
 }
 
-const paginationReducer = (state = initialState, action) => {
+const pageReducer = (state = initialState, action) => {
     switch (action.type) {
-        case MainPageTypes.SET_DISHES: {
+        case PAGE_TYPES.SET_DISHES: {
             return { ...state, dishes: action.payload }
         }
 
-        case MainPageTypes.SET_CART: {
+        case PAGE_TYPES.SET_CART: {
             const dishes = action.payload.dishes.map((dish) => ({ id: dish.id, count: dish.count }))
             window.localStorage.setItem('cart-selected-dishes', JSON.stringify(dishes))
             return { ...state, cart: action.payload }
         }
-        case MainPageTypes.SET_CART_DELIVERY_MODE: {
+        case PAGE_TYPES.SET_CART_DELIVERY_MODE: {
             return { ...state, cart: { ...state.cart, deliveryMode: action.payload } }
         }
-        case MainPageTypes.SET_CART_DELIVERY_DATE: {
+        case PAGE_TYPES.SET_CART_DELIVERY_DATE: {
             return { ...state, cart: { ...state.cart, deliveryDate: action.payload } }
         }
 
-        case MainPageTypes.SET_PAGINATION: {
+        case PAGE_TYPES.SET_PAGINATION: {
             return { ...state, pagination: action.payload }
         }
-        case MainPageTypes.RESET_PAGINATION: {
+        case PAGE_TYPES.RESET_PAGINATION: {
             return { ...state, pagination: initialState.pagination }
         }
 
-        case MainPageTypes.SET_SEARCH: {
+        case PAGE_TYPES.SET_SEARCH: {
             return { ...state, search: action.payload }
         }
 
-        case MainPageTypes.SET_SORTING_SELECT: {
+        case PAGE_TYPES.SET_SORTING_SELECT: {
             return { ...state, sortingSelectValue: action.payload }
         }
 
-        case MainPageTypes.SET_DISH_TYPE: {
+        case PAGE_TYPES.SET_DISH_TYPE: {
             return { ...state, dishType: action.payload }
         }
 
-        case MainPageTypes.SET_DISH_INFO: {
-            return {
-                ...state,
-                dishes: state.dishes.map((dish: DishInfo) => {
-                    if (dish.id === action.payload.id) {
-                        return { ...dish, [action.payload.field]: action.payload.value }
-                    }
-                    return dish
-                }),
-            }
-        }
-
-        case MainPageTypes.ADD_DISH_INFO: {
+        case PAGE_TYPES.ADD_DISH_INFO: {
             return {
                 ...state,
                 dishes: [
@@ -98,8 +86,24 @@ const paginationReducer = (state = initialState, action) => {
             }
         }
 
-        case MainPageTypes.REMOVE_DISH_INFO: {
+        case PAGE_TYPES.SET_DISH_INFO: {
+            return {
+                ...state,
+                dishes: state.dishes.map((dish: DishInfo) => {
+                    if (dish.id === action.payload.id) {
+                        return { ...dish, [action.payload.field]: action.payload.value }
+                    }
+                    return dish
+                }),
+            }
+        }
+
+        case PAGE_TYPES.REMOVE_DISH_INFO: {
             return { ...state, dishes: state.dishes.filter((item) => item.id !== 0) }
+        }
+
+        case PAGE_TYPES.RESET_STATE: {
+            return { ...initialState }
         }
 
         default: {
@@ -108,4 +112,4 @@ const paginationReducer = (state = initialState, action) => {
     }
 }
 
-export default paginationReducer
+export default pageReducer

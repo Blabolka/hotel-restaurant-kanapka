@@ -1,21 +1,23 @@
 import { OrdersTypes } from '../types'
 import api from '@api/index'
 
+export interface RequestFilteringParams {
+    [key: string]: boolean | null
+}
+
 interface GetOrdersAsyncParams {
     page: number
+    filteringParams: RequestFilteringParams
 }
 export const getOrdersAsync = (params: GetOrdersAsyncParams, paginationCallback) => {
     return (dispatch) => {
-        const { page } = params
+        const { page, filteringParams } = params
 
         api.orders
             .getAllOrdersPaginated(
                 { page, size: 6 },
                 {
-                    urgent: null,
-                    confirmed: null,
-                    cancelled: null,
-                    done: null,
+                    ...filteringParams,
                     orderedAtFrom: null,
                     orderedAtTo: null,
                     expectedAtFrom: null,

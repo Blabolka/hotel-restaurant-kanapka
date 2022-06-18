@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import api from '@api/index'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { setCart } from '@redux-actions/mainPageActions'
+import { setCart } from '@redux-actions/pageActions'
 
 import { DELIVERY_MODE_VALUES } from '@pages/MainPage/RightBlock/Delivery/deliveryModeSwitcherUtils'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -13,7 +13,7 @@ export default function OrderConfirm() {
     const classes = useStyles()
     const dispatch = useAppDispatch()
     const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false)
-    const cart = useAppSelector((state) => state.mainPage.cart)
+    const cart = useAppSelector((state) => state.page.cart)
 
     const onOrderButtonClick = () => {
         if (cart.dishes.length) {

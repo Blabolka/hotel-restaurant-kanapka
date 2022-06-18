@@ -10,7 +10,7 @@ import {
     removeDishInfo,
     setDishInfo,
     updateDishByIdAsync,
-} from '@redux-actions/mainPageActions'
+} from '@redux-actions/pageActions'
 import { DishInfo } from '@components/Dishes/dishItemUtils'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import edit from '@assets/img/edit.svg'
@@ -33,7 +33,7 @@ export default function MenuBlock() {
     const dispatch = useAppDispatch()
     const data = new FormData()
 
-    const dishes: DishInfo[] = useAppSelector((state) => state.mainPage.dishes)
+    const dishes: DishInfo[] = useAppSelector((state) => state.page.dishes)
 
     const [editRowIds, setEditRowIds] = useState<(string | number)[]>([])
     const [addMode, setAddMode] = useState<boolean>(false)

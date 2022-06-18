@@ -1,6 +1,6 @@
 import api from '@api/index'
 
-import { MainPageTypes } from '../types'
+import { PAGE_TYPES } from '../types'
 import { DishInfo, DishCartInfo } from '@components/Dishes/dishItemUtils'
 import { DELIVERY_MODE_VALUES } from '@pages/MainPage/RightBlock/Delivery/deliveryModeSwitcherUtils'
 import { PAGINATION_SIZE_PER_PAGE } from '@pages/MainPage/mainPageUtils'
@@ -8,23 +8,23 @@ import { dishTypes } from '@components/TabContainer/tabContainerUtils'
 
 export const getDishesAsync = () => {
     return (dispatch, getState) => {
-        const { mainPage } = getState()
+        const { page } = getState()
 
         const params = {
-            page: mainPage.pagination.page - 1,
+            page: page.pagination.page - 1,
             size: PAGINATION_SIZE_PER_PAGE,
-            name: mainPage.search,
-            sort: mainPage.sortingSelectValue,
+            name: page.search,
+            sort: page.sortingSelectValue,
         }
 
-        mainPage.dishType === dishTypes[0]
+        page.dishType === dishTypes[0]
             ? api.dishes.getAllDishesPaginated(params).then((requestData) => {
                   dispatch(setDishes(requestData.data.content))
-                  dispatch(setPagination({ ...mainPage.pagination, totalPages: requestData.data.totalPages }))
+                  dispatch(setPagination({ ...page.pagination, totalPages: requestData.data.totalPages }))
               })
-            : api.dishes.getDishesByTypePaginated(mainPage.dishType, params).then((requestData) => {
+            : api.dishes.getDishesByTypePaginated(page.dishType, params).then((requestData) => {
                   dispatch(setDishes(requestData.data.content))
-                  dispatch(setPagination({ ...mainPage.pagination, totalPages: requestData.data.totalPages }))
+                  dispatch(setPagination({ ...page.pagination, totalPages: requestData.data.totalPages }))
               })
     }
 }
@@ -57,13 +57,13 @@ export const deleteDishByIdAsync = (id: string | number) => (dispatch) => {
 }
 
 export const setDishes = (state: DishInfo[]) => ({
-    type: MainPageTypes.SET_DISHES,
+    type: PAGE_TYPES.SET_DISHES,
     payload: state,
 })
 
 export const getCartDishesFromLocalStorageAsync = () => {
     return (dispatch, getState) => {
-        const { mainPage } = getState()
+        const { page } = getState()
         const stringOfDishes = window.localStorage.getItem('cart-selected-dishes')
 
         if (stringOfDishes) {
@@ -80,7 +80,7 @@ export const getCartDishesFromLocalStorageAsync = () => {
 
                         return memo
                     }, [])
-                    dispatch(setCart({ ...mainPage.cart, dishes: filteredDishes }))
+                    dispatch(setCart({ ...page.cart, dishes: filteredDishes }))
                 })
             }
         }
@@ -88,43 +88,51 @@ export const getCartDishesFromLocalStorageAsync = () => {
 }
 
 export const setCart = (state) => ({
-    type: MainPageTypes.SET_CART,
+    type: PAGE_TYPES.SET_CART,
     payload: state,
 })
 export const setCartDeliveryMode = (state: DELIVERY_MODE_VALUES) => ({
-    type: MainPageTypes.SET_CART_DELIVERY_MODE,
+    type: PAGE_TYPES.SET_CART_DELIVERY_MODE,
     payload: state,
 })
 export const setCartDeliveryDate = (state: Date | null) => ({
-    type: MainPageTypes.SET_CART_DELIVERY_DATE,
+    type: PAGE_TYPES.SET_CART_DELIVERY_DATE,
     payload: state,
 })
 
 export const resetPagination = () => ({
-    type: MainPageTypes.RESET_PAGINATION,
+    type: PAGE_TYPES.RESET_PAGINATION,
 })
 export const setPagination = (state) => ({
-    type: MainPageTypes.SET_PAGINATION,
+    type: PAGE_TYPES.SET_PAGINATION,
     payload: state,
 })
 
 export const setSearch = (state: string) => ({
-    type: MainPageTypes.SET_SEARCH,
+    type: PAGE_TYPES.SET_SEARCH,
     payload: state,
 })
 
 export const setSortingSelect = (state: string) => ({
-    type: MainPageTypes.SET_SORTING_SELECT,
+    type: PAGE_TYPES.SET_SORTING_SELECT,
     payload: state,
 })
 
 export const setDishesType = (state: string) => ({
-    type: MainPageTypes.SET_DISH_TYPE,
+    type: PAGE_TYPES.SET_DISH_TYPE,
     payload: state,
 })
 
+export const resetState = () => ({
+    type: PAGE_TYPES.RESET_STATE,
+})
+
+export const addDishInfo = () => ({
+    type: PAGE_TYPES.ADD_DISH_INFO,
+})
+
 export const setDishInfo = (id: number, field: string, value: string) => ({
-    type: MainPageTypes.SET_DISH_INFO,
+    type: PAGE_TYPES.SET_DISH_INFO,
     payload: {
         id,
         field,
@@ -132,10 +140,6 @@ export const setDishInfo = (id: number, field: string, value: string) => ({
     },
 })
 
-export const addDishInfo = () => ({
-    type: MainPageTypes.ADD_DISH_INFO,
-})
-
 export const removeDishInfo = () => ({
-    type: MainPageTypes.REMOVE_DISH_INFO,
+    type: PAGE_TYPES.REMOVE_DISH_INFO,
 })

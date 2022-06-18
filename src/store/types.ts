@@ -2,22 +2,19 @@ export enum OrdersTypes {
     SET_ORDERS = 'orders/set',
 }
 
-export enum MainPageTypes {
-    SET_DISHES = 'mainPage/dishes/set',
+export enum PAGE_TYPES {
+    SET_DISHES = 'page/dishes/set',
+    SET_CART = 'page/cart/set',
+    SET_CART_DELIVERY_MODE = 'page/cart/setDeliveryMode',
+    SET_CART_DELIVERY_DATE = 'page/cart/setDeliveryDate',
+    SET_PAGINATION = 'page/pagination/set',
+    RESET_PAGINATION = 'page/pagination/reset',
+    SET_SEARCH = 'page/search/set',
+    SET_SORTING_SELECT = 'page/sortingSelect/set',
+    SET_DISH_TYPE = 'page/dishType/set',
+    RESET_STATE = 'page/reset',
 
-    SET_CART = 'mainPage/cart/set',
-    SET_CART_DELIVERY_MODE = 'mainPage/cart/setDeliveryMode',
-    SET_CART_DELIVERY_DATE = 'mainPage/cart/setDeliveryDate',
-
-    SET_PAGINATION = 'mainPage/pagination/set',
-    RESET_PAGINATION = 'mainPage/pagination/reset',
-
-    SET_SEARCH = 'mainPage/search/set',
-    SET_SORTING_SELECT = 'mainPage/sortingSelect/set',
-
-    SET_DISH_TYPE = 'mainPage/dishType/set',
-    SET_DISH_INFO = 'mainPage/dishInfo/set',
-
-    ADD_DISH_INFO = 'admin/dishInfo/add',
-    REMOVE_DISH_INFO = 'admin/dishInfo/remove',
+    ADD_DISH_INFO = 'page/dishInfo/add',
+    SET_DISH_INFO = 'page/dishInfo/set',
+    REMOVE_DISH_INFO = 'page/dishInfo/remove',
 }

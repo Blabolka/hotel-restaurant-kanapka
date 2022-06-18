@@ -1,3 +1,5 @@
+import { Location } from 'react-router-dom'
+
 import { TabItem } from '@components/TabContainer/tabContainerUtils'
 import menu from '@assets/img/menu.svg'
 import order from '@assets/img/order.svg'
@@ -23,3 +25,15 @@ export const getTabItems = (): TabItem[] => [
         label: 'Статистика',
     },
 ]
+
+export const getCurrentTabByPath = (location: Location): number => {
+    const lastPartOfPath = location.pathname.split('/').pop()
+    switch (lastPartOfPath) {
+        case 'orders':
+            return 1
+        case 'statistics':
+            return 2
+        default:
+            return 0
+    }
+}
