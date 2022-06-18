@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { setCartDeliveryDate } from '@redux-actions/mainPageActions'
+import { setCartDeliveryDate } from '@redux-actions/pageActions'
 
 import { isAfter, isBefore } from 'date-fns'
 import { getMinDeliveryDate, getMinDeliveryTime, getMaxDeliveryDate, getMaxDeliveryTime } from '@utils/dateUtils'
@@ -23,8 +23,8 @@ export default function Delivery() {
     const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
     const [isTimePickerOpen, setIsTimePickerOpen] = useState<boolean>(false)
 
-    const deliveryDate = useAppSelector((state) => state.mainPage.cart.deliveryDate)
-    const deliveryMode = useAppSelector((state) => state.mainPage.cart.deliveryMode)
+    const deliveryDate = useAppSelector((state) => state.page.cart.deliveryDate)
+    const deliveryMode = useAppSelector((state) => state.page.cart.deliveryMode)
     const isPickersDisabled = deliveryMode === DELIVERY_MODE_VALUES.AS_SOON_AS_POSSIBLE
 
     const updateDeliveryDate = (newSelectedDate) => {

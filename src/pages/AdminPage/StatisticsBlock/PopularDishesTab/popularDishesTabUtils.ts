@@ -1,5 +1,5 @@
 import { PopularDishInfo } from '@components/Dishes/dishItemUtils'
-import { Column, Data } from '@pages/AdminPage/CustomTable/CustomTable'
+import { Column, Data } from '@components/CustomTable/CustomTable'
 
 export const getColumns = (): Column[] => {
     return [

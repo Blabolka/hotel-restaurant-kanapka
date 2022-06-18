@@ -4,7 +4,7 @@ import { useAppSelector } from '@hooks'
 import { Stack } from '@mui/material'
 
 export default function CartSum() {
-    const dishesInCart = useAppSelector((state) => state.mainPage.cart.dishes)
+    const dishesInCart = useAppSelector((state) => state.page.cart.dishes)
 
     return (
         <Stack flexDirection="row" justifyContent="space-between" alignItems="center">

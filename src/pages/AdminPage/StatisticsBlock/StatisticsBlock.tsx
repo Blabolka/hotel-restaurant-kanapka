@@ -5,7 +5,7 @@ import { Stack } from '@mui/material'
 import StatisticsTabs from '@pages/AdminPage/StatisticsBlock/Tabs/StatisticsTabs'
 import PopularDishes from '@pages/AdminPage/StatisticsBlock/PopularDishesTab/PopularDishesTab'
 import LoadingButtonCustom from '@components/Overrides/LoadingButtonCustom'
-import { exportPopularDishesAsync } from '@redux-actions/oredersActions'
+import { exportPopularDishesAsync } from '@redux-actions/dishesActions'
 import { useAppDispatch } from '@hooks'
 
 export default function StatisticsBlock() {
