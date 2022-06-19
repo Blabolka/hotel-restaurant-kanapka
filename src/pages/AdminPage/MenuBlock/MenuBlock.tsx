@@ -27,10 +27,13 @@ import LoadingButtonCustom from '@components/Overrides/LoadingButtonCustom'
 import ButtonCustom from '@components/Overrides/ButtonCustom'
 import { dishTypes } from '@components/TabContainer/tabContainerUtils'
 import { ExpandMore } from '@mui/icons-material'
+import { useSnackbar } from 'notistack'
+import DishSearchBar from '@components/DishSearchBar/DishSearchBar'
 
 export default function MenuBlock() {
     const classes = useStyles()
     const dispatch = useAppDispatch()
+    const { enqueueSnackbar } = useSnackbar()
     const data = new FormData()
 
     const dishes: DishInfo[] = useAppSelector((state) => state.page.dishes)
@@ -69,17 +72,22 @@ export default function MenuBlock() {
     }
 
     const handleSaveData = (id: string | number) => {
-        setAddMode(false)
-        setEditRowIds(editRowIds.filter((item: string | number) => item !== id))
-        const { name, description, weight, price } = dishes.find((item: DishInfo) => item.id === id) || {}
+        const onSuccessAction = () => {
+            setAddMode(false)
+            setEditRowIds(editRowIds.filter((item: string | number) => item !== id))
+            delete files[id]
+        }
+
+        const { name, description, weight, price, dishType } = dishes.find((item: DishInfo) => item.id === id) || {}
         data.append('image', files[id])
-        data.append('data', JSON.stringify({ name, description, weight, price, dishType: 'pizza' }))
-        addMode ? dispatch(addDishAsync({ data })) : dispatch(updateDishByIdAsync(id, { data }))
-        delete files[id]
+        data.append('data', JSON.stringify({ name, description, weight, price, dishType }))
+        addMode
+            ? dispatch(addDishAsync({ data }, enqueueSnackbar, onSuccessAction))
+            : dispatch(updateDishByIdAsync(id, { data }, enqueueSnackbar, onSuccessAction))
     }
 
     const handleDeleteDish = (id: string | number) => {
-        dispatch(deleteDishByIdAsync(id))
+        dispatch(deleteDishByIdAsync(id, enqueueSnackbar))
     }
 
     const handleAddDishButton = () => {
@@ -163,7 +171,8 @@ export default function MenuBlock() {
     return (
         <Box className={classes.root}>
             <Box className={classes.container}>
-                <Box className={classes.addDishButton}>
+                <Box className={classes.filterContainer}>
+                    <DishSearchBar />
                     {!addMode ? (
                         <LoadingButtonCustom onClick={handleAddDishButton}>Додати новий запис</LoadingButtonCustom>
                     ) : (
@@ -196,9 +205,10 @@ const useStyles = makeStyles(() =>
             display: 'flex',
             flexDirection: 'column',
         },
-        addDishButton: {
+        filterContainer: {
             display: 'flex',
-            justifyContent: 'end',
+            justifyContent: 'space-between',
+            gap: '20px',
             marginBottom: '20px',
             '& .MuiButton-root': {
                 width: '240px',

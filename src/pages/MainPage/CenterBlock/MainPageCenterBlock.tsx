@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Stack } from '@mui/material'
-import DishSearchBar from './Filtering/DishSearchBar/DishSearchBar'
+import DishSearchBar from '../../../components/DishSearchBar/DishSearchBar'
 import DishSortingSelect from './Filtering/DishSortingSelect/DishSortingSelect'
 import DishItemsGrid from './DishItemsGrid/DishItemsGrid'
 import DishPagination from './Filtering/DishPagination/DishPagination'

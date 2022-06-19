@@ -5,6 +5,7 @@ import { DishInfo, DishCartInfo } from '@components/Dishes/dishItemUtils'
 import { DELIVERY_MODE_VALUES } from '@pages/MainPage/RightBlock/Delivery/deliveryModeSwitcherUtils'
 import { PAGINATION_SIZE_PER_PAGE } from '@pages/MainPage/mainPageUtils'
 import { dishTypes } from '@components/TabContainer/tabContainerUtils'
+import { EnqueueSnackbarType } from '@pages/AdminPage/MenuBlock/menuBlockUtils'
 
 export const getDishesAsync = () => {
     return (dispatch, getState) => {
@@ -29,31 +30,67 @@ export const getDishesAsync = () => {
     }
 }
 
-export const updateDishByIdAsync = (id: string | number, params: any) => (dispatch) => {
-    api.dishes.updateDishById(id, params).then((response) => {
-        if (response.status === 200) {
-            dispatch(getDishesAsync())
-        }
-    })
-}
+export const updateDishByIdAsync =
+    (id: string | number, params: any, enqueueSnackbar: EnqueueSnackbarType, onSuccessAction: () => void) =>
+    (dispatch) => {
+        api.dishes
+            .updateDishById(id, params)
+            .then((response) => {
+                if (response.status === 200) {
+                    enqueueSnackbar('Страва була успішно оновлена!', {
+                        variant: 'success',
+                        autoHideDuration: 2000,
+                    })
+                    onSuccessAction()
+                    dispatch(getDishesAsync())
+                }
+            })
+            .catch(() => {
+                enqueueSnackbar('Перевірте правильність введених даних!', {
+                    variant: 'error',
+                    autoHideDuration: 2000,
+                })
+            })
+    }
 
-export const addDishAsync = (params: any) => (dispatch) => {
+export const addDishAsync =
+    (params: any, enqueueSnackbar: EnqueueSnackbarType, onSuccessAction: () => void) => (dispatch) => {
+        api.dishes
+            .addDish(params)
+            .then((response) => {
+                if (response.status === 200) {
+                    enqueueSnackbar('Страва була успішно додана!', {
+                        variant: 'success',
+                        autoHideDuration: 2000,
+                    })
+                    onSuccessAction()
+                    dispatch(getDishesAsync())
+                }
+            })
+            .catch(() => {
+                enqueueSnackbar('Перевірте правильність введених даних!', {
+                    variant: 'error',
+                    autoHideDuration: 2000,
+                })
+            })
+    }
+
+export const deleteDishByIdAsync = (id: string | number, enqueueSnackbar: EnqueueSnackbarType) => (dispatch) => {
     api.dishes
-        .addDish(params)
-        .then((response) => {
-            if (response.status === 200) {
-                dispatch(getDishesAsync())
-            }
+        .deleteDishById(id)
+        .then(() => {
+            enqueueSnackbar('Страву було успішно видалено!', {
+                variant: 'success',
+                autoHideDuration: 2000,
+            })
+            dispatch(getDishesAsync())
         })
         .catch(() => {
-            dispatch(removeDishInfo())
+            enqueueSnackbar('При видаленні страви сталася помилка!', {
+                variant: 'error',
+                autoHideDuration: 2000,
+            })
         })
-}
-
-export const deleteDishByIdAsync = (id: string | number) => (dispatch) => {
-    api.dishes.deleteDishById(id).then(() => {
-        dispatch(getDishesAsync())
-    })
 }
 
 export const setDishes = (state: DishInfo[]) => ({
