@@ -31,7 +31,8 @@ export const getDishesAsync = () => {
 }
 
 export const updateDishByIdAsync =
-    (id: string | number, params: any, enqueueSnackbar: EnqueueSnackbarType) => (dispatch) => {
+    (id: string | number, params: any, enqueueSnackbar: EnqueueSnackbarType, onSuccessAction: () => void) =>
+    (dispatch) => {
         api.dishes
             .updateDishById(id, params)
             .then((response) => {
@@ -40,6 +41,7 @@ export const updateDishByIdAsync =
                         variant: 'success',
                         autoHideDuration: 2000,
                     })
+                    onSuccessAction()
                     dispatch(getDishesAsync())
                 }
             })
@@ -51,26 +53,28 @@ export const updateDishByIdAsync =
             })
     }
 
-export const addDishAsync = (params: any, enqueueSnackbar: EnqueueSnackbarType) => (dispatch) => {
-    api.dishes
-        .addDish(params)
-        .then((response) => {
-            if (response.status === 200) {
-                enqueueSnackbar('Страва була успішно додана!', {
-                    variant: 'success',
+export const addDishAsync =
+    (params: any, enqueueSnackbar: EnqueueSnackbarType, onSuccessAction: () => void) => (dispatch) => {
+        api.dishes
+            .addDish(params)
+            .then((response) => {
+                if (response.status === 200) {
+                    enqueueSnackbar('Страва була успішно додана!', {
+                        variant: 'success',
+                        autoHideDuration: 2000,
+                    })
+                    onSuccessAction()
+                    dispatch(getDishesAsync())
+                }
+            })
+            .catch(() => {
+                // dispatch(removeDishInfo())
+                enqueueSnackbar('Перевірте правильність введених даних!', {
+                    variant: 'error',
                     autoHideDuration: 2000,
                 })
-                dispatch(getDishesAsync())
-            }
-        })
-        .catch(() => {
-            dispatch(removeDishInfo())
-            enqueueSnackbar('Перевірте правильність введених даних!', {
-                variant: 'error',
-                autoHideDuration: 2000,
             })
-        })
-}
+    }
 
 export const deleteDishByIdAsync = (id: string | number, enqueueSnackbar: EnqueueSnackbarType) => (dispatch) => {
     api.dishes

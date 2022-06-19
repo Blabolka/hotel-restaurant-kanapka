@@ -72,15 +72,18 @@ export default function MenuBlock() {
     }
 
     const handleSaveData = (id: string | number) => {
-        setAddMode(false)
-        setEditRowIds(editRowIds.filter((item: string | number) => item !== id))
+        const onSuccessAction = () => {
+            setAddMode(false)
+            setEditRowIds(editRowIds.filter((item: string | number) => item !== id))
+            delete files[id]
+        }
+
         const { name, description, weight, price, dishType } = dishes.find((item: DishInfo) => item.id === id) || {}
         data.append('image', files[id])
         data.append('data', JSON.stringify({ name, description, weight, price, dishType }))
         addMode
-            ? dispatch(addDishAsync({ data }, enqueueSnackbar))
-            : dispatch(updateDishByIdAsync(id, { data }, enqueueSnackbar))
-        delete files[id]
+            ? dispatch(addDishAsync({ data }, enqueueSnackbar, onSuccessAction))
+            : dispatch(updateDishByIdAsync(id, { data }, enqueueSnackbar, onSuccessAction))
     }
 
     const handleDeleteDish = (id: string | number) => {
