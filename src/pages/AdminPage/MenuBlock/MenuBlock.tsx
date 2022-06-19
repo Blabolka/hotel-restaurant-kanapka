@@ -28,7 +28,7 @@ import ButtonCustom from '@components/Overrides/ButtonCustom'
 import { dishTypes } from '@components/TabContainer/tabContainerUtils'
 import { ExpandMore } from '@mui/icons-material'
 import { useSnackbar } from 'notistack'
-import DishSearchBar from '@pages/MainPage/CenterBlock/Filtering/DishSearchBar/DishSearchBar'
+import DishSearchBar from '@components/DishSearchBar/DishSearchBar'
 
 export default function MenuBlock() {
     const classes = useStyles()
@@ -171,7 +171,7 @@ export default function MenuBlock() {
     return (
         <Box className={classes.root}>
             <Box className={classes.container}>
-                <Box className={classes.addDishButton}>
+                <Box className={classes.filterContainer}>
                     <DishSearchBar />
                     {!addMode ? (
                         <LoadingButtonCustom onClick={handleAddDishButton}>Додати новий запис</LoadingButtonCustom>
@@ -205,7 +205,7 @@ const useStyles = makeStyles(() =>
             display: 'flex',
             flexDirection: 'column',
         },
-        addDishButton: {
+        filterContainer: {
             display: 'flex',
             justifyContent: 'space-between',
             gap: '20px',

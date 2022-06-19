@@ -68,7 +68,6 @@ export const addDishAsync =
                 }
             })
             .catch(() => {
-                // dispatch(removeDishInfo())
                 enqueueSnackbar('Перевірте правильність введених даних!', {
                     variant: 'error',
                     autoHideDuration: 2000,
