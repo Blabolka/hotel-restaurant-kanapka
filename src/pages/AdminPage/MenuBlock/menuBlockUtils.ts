@@ -1,5 +1,8 @@
 import { Column, ColumnFormat, Data, DataValueTypes } from '@components/CustomTable/CustomTable'
 import { DishInfo } from '@components/Dishes/dishItemUtils'
+import { OptionsObject, SnackbarKey, SnackbarMessage } from 'notistack'
+
+export type EnqueueSnackbarType = (message: SnackbarMessage, options?: OptionsObject | undefined) => SnackbarKey
 
 export enum TranslateDishTypes {
     lunch = 'Ланчі',
