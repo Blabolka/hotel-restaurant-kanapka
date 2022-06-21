@@ -88,7 +88,7 @@ const useStyles = makeStyles(() =>
             overflow: 'scroll',
         },
         navButton: {
-            height: '30px',
+            height: '42px',
             fontWeight: 400,
             marginBottom: '20px',
             backgroundColor: '#F8AC1B',
