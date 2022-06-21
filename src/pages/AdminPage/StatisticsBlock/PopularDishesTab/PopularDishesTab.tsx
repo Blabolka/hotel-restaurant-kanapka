@@ -4,7 +4,7 @@ import api from '@api/index'
 import { getColumns, getRows } from './popularDishesTabUtils'
 
 import { Stack } from '@mui/material'
-import CustomTable, { Data } from '@pages/AdminPage/CustomTable/CustomTable'
+import CustomTable, { Data } from '@components/CustomTable/CustomTable'
 import PaginationCustom from '@components/Overrides/PaginationCustom'
 
 export default function PopularDishesTab() {

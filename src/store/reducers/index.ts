@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux'
 
-import mainPageReducer from './mainPageReducer'
+import ordersReducer from './ordersReducer'
+import pageReducer from './pageReducer'
 
 const rootReducer = combineReducers({
-    mainPage: mainPageReducer,
+    orders: ordersReducer,
+    page: pageReducer,
 })
 
 export default rootReducer

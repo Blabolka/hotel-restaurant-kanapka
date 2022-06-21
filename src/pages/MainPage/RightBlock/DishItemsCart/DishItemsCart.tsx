@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { setCart } from '@redux-actions/mainPageActions'
+import { setCart } from '@redux-actions/pageActions'
 
 import { Stack } from '@mui/material'
 import { createStyles, makeStyles } from '@mui/styles'
@@ -16,7 +16,7 @@ export default function DishItemsCart() {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
-    const cart = useAppSelector((state) => state.mainPage.cart)
+    const cart = useAppSelector((state) => state.page.cart)
 
     const onCounterDecreaseClick = (dishId: number) => {
         const newCartDishes = cart.dishes.map((dish) => {
@@ -88,7 +88,7 @@ const useStyles = makeStyles(() =>
             overflow: 'scroll',
         },
         navButton: {
-            height: '30px',
+            height: '42px',
             fontWeight: 400,
             marginBottom: '20px',
             backgroundColor: '#F8AC1B',

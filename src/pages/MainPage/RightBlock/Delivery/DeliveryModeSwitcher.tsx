@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { setCartDeliveryMode } from '@redux-actions/mainPageActions'
+import { setCartDeliveryMode } from '@redux-actions/pageActions'
 import { DELIVERY_MODE_VALUES } from './deliveryModeSwitcherUtils'
 
 import { Stack } from '@mui/material'
@@ -12,7 +12,7 @@ import ButtonCustom from '@components/Overrides/ButtonCustom'
 export default function DeliveryModeSwitcher() {
     const classes = useStyles()
     const dispatch = useAppDispatch()
-    const deliveryMode = useAppSelector((state) => state.mainPage.cart.deliveryMode)
+    const deliveryMode = useAppSelector((state) => state.page.cart.deliveryMode)
 
     const onAsSoonAsPossibleButtonClick = () => {
         if (deliveryMode !== DELIVERY_MODE_VALUES.AS_SOON_AS_POSSIBLE) {

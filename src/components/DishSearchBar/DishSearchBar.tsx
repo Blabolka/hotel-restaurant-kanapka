@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useAppDispatch, useAppSelector, useDebounce, useDidMountEffect } from '@hooks'
-import { setSearch, getDishesAsync, resetPagination } from '@redux-actions/mainPageActions'
+import { setSearch, getDishesAsync, resetPagination } from '@redux-actions/pageActions'
 
 import TextFieldCustom from '@components/Overrides/TextFieldCustom'
 
@@ -10,7 +10,7 @@ import { InputAdornment } from '@mui/material'
 
 const DishSearchBar = () => {
     const dispatch = useAppDispatch()
-    const searchValue = useAppSelector((state) => state.mainPage.search)
+    const searchValue = useAppSelector((state) => state.page.search)
 
     const onInputChange = (event) => {
         dispatch(setSearch(event.target.value))

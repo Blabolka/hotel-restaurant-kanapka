@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 
 import { useAppDispatch } from '@hooks'
 import {
-    getDishesAsync,
-    getCartDishesFromLocalStorageAsync,
-    resetPagination,
+    resetState,
     setDishesType,
-} from '@redux-actions/mainPageActions'
+    getDishesAsync,
+    resetPagination,
+    getCartDishesFromLocalStorageAsync,
+} from '@redux-actions/pageActions'
 
 import { Box } from '@mui/material'
 import { createStyles, makeStyles } from '@mui/styles'
@@ -26,6 +27,10 @@ export default function MainPage() {
     useEffect(() => {
         dispatch(getDishesAsync())
         dispatch(getCartDishesFromLocalStorageAsync())
+
+        return () => {
+            dispatch(resetState())
+        }
     }, [])
 
     const onTabChange = (event: React.SyntheticEvent, value: number) => {

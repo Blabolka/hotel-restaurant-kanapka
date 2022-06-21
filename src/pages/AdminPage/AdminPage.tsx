@@ -1,34 +1,40 @@
 import React, { useState } from 'react'
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'
+
 import { createStyles, makeStyles } from '@mui/styles'
 import { Box } from '@mui/material'
 import { TabItem } from '@components/TabContainer/tabContainerUtils'
-import { getTabItems } from '@pages/AdminPage/adminPageUtils'
-
 import NavigationPanel from '@components/NavigationPanel/NavigationPanel'
-import MenuBlock from '@pages/AdminPage/MenuBlock/MenuBlock'
-import StatisticsBlock from '@pages/AdminPage/StatisticsBlock/StatisticsBlock'
+
+import { getTabItems, getCurrentTabByPath } from '@pages/AdminPage/adminPageUtils'
 
 export default function AdminPage() {
     const classes = useStyles()
+    const navigate = useNavigate()
+    const location = useLocation()
 
-    const [openedTab, setOpenedTab] = useState(0)
+    const [openedTab, setOpenedTab] = useState<number>(getCurrentTabByPath(location))
 
     const onTabChange = (event: React.SyntheticEvent, value: number) => {
         setOpenedTab(value)
+        navigateByTab(value)
     }
 
     const tabItems: TabItem[] = getTabItems()
 
-    const getMainBlockByTabIndex = (tab: number): JSX.Element | null => {
+    const navigateByTab = (tab: number): void => {
         switch (tab) {
             case 0:
-                return <MenuBlock />
+                navigate('/admin')
+                break
             case 1:
-                return null
+                navigate('/admin/orders')
+                break
             case 2:
-                return <StatisticsBlock />
+                navigate('/admin/statistics')
+                break
             default:
-                return null
+                navigate('/')
         }
     }
 
@@ -36,7 +42,7 @@ export default function AdminPage() {
         <Box className={classes.root}>
             <Box className={classes.container}>
                 <NavigationPanel title="Управління" items={tabItems} openedTab={openedTab} onTabChange={onTabChange} />
-                {getMainBlockByTabIndex(openedTab)}
+                <Outlet />
             </Box>
         </Box>
     )

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Box, Button, MenuItem, Select, TextField, Typography } from '@mui/material'
 import { createStyles, makeStyles } from '@mui/styles'
-import CustomTable, { Column, Data, DataValueTypes } from '@pages/AdminPage/CustomTable/CustomTable'
+import CustomTable, { Column, Data, DataValueTypes } from '@components/CustomTable/CustomTable'
 import {
     addDishAsync,
     addDishInfo,
@@ -10,7 +10,7 @@ import {
     removeDishInfo,
     setDishInfo,
     updateDishByIdAsync,
-} from '@redux-actions/mainPageActions'
+} from '@redux-actions/pageActions'
 import { DishInfo } from '@components/Dishes/dishItemUtils'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import edit from '@assets/img/edit.svg'
@@ -27,13 +27,16 @@ import LoadingButtonCustom from '@components/Overrides/LoadingButtonCustom'
 import ButtonCustom from '@components/Overrides/ButtonCustom'
 import { dishTypes } from '@components/TabContainer/tabContainerUtils'
 import { ExpandMore } from '@mui/icons-material'
+import { useSnackbar } from 'notistack'
+import DishSearchBar from '@components/DishSearchBar/DishSearchBar'
 
 export default function MenuBlock() {
     const classes = useStyles()
     const dispatch = useAppDispatch()
+    const { enqueueSnackbar } = useSnackbar()
     const data = new FormData()
 
-    const dishes: DishInfo[] = useAppSelector((state) => state.mainPage.dishes)
+    const dishes: DishInfo[] = useAppSelector((state) => state.page.dishes)
 
     const [editRowIds, setEditRowIds] = useState<(string | number)[]>([])
     const [addMode, setAddMode] = useState<boolean>(false)
@@ -69,17 +72,22 @@ export default function MenuBlock() {
     }
 
     const handleSaveData = (id: string | number) => {
-        setAddMode(false)
-        setEditRowIds(editRowIds.filter((item: string | number) => item !== id))
-        const { name, description, weight, price } = dishes.find((item: DishInfo) => item.id === id) || {}
+        const onSuccessAction = () => {
+            setAddMode(false)
+            setEditRowIds(editRowIds.filter((item: string | number) => item !== id))
+            delete files[id]
+        }
+
+        const { name, description, weight, price, dishType } = dishes.find((item: DishInfo) => item.id === id) || {}
         data.append('image', files[id])
-        data.append('data', JSON.stringify({ name, description, weight, price, dishType: 'pizza' }))
-        addMode ? dispatch(addDishAsync({ data })) : dispatch(updateDishByIdAsync(id, { data }))
-        delete files[id]
+        data.append('data', JSON.stringify({ name, description, weight, price, dishType }))
+        addMode
+            ? dispatch(addDishAsync({ data }, enqueueSnackbar, onSuccessAction))
+            : dispatch(updateDishByIdAsync(id, { data }, enqueueSnackbar, onSuccessAction))
     }
 
     const handleDeleteDish = (id: string | number) => {
-        dispatch(deleteDishByIdAsync(id))
+        dispatch(deleteDishByIdAsync(id, enqueueSnackbar))
     }
 
     const handleAddDishButton = () => {
@@ -98,7 +106,7 @@ export default function MenuBlock() {
         const filename = value?.toString().split('/').pop()
         return filename ? (
             <Box className={classes.fileContainer}>
-                <a href={value?.toString()}>
+                <a href={value?.toString()} target="_blank" rel="noreferrer">
                     <Box className={classes.loadedFile}>
                         <img src={picture} alt="Picture" />
                         <Typography variant="body2">{filename}</Typography>
@@ -163,13 +171,14 @@ export default function MenuBlock() {
     return (
         <Box className={classes.root}>
             <Box className={classes.container}>
-                <Box className={classes.addDishButton}>
+                <Box className={classes.filterContainer}>
+                    <DishSearchBar />
                     {!addMode ? (
                         <LoadingButtonCustom onClick={handleAddDishButton}>Додати новий запис</LoadingButtonCustom>
                     ) : (
                         <ButtonCustom
                             classes={{ root: classes.cancelButton }}
-                            variant="outlined"
+                            variant="contained"
                             onClick={handleCancelButton}
                         >
                             Відмінити додавання
@@ -196,9 +205,10 @@ const useStyles = makeStyles(() =>
             display: 'flex',
             flexDirection: 'column',
         },
-        addDishButton: {
+        filterContainer: {
             display: 'flex',
-            justifyContent: 'end',
+            justifyContent: 'space-between',
+            gap: '20px',
             marginBottom: '20px',
             '& .MuiButton-root': {
                 width: '240px',

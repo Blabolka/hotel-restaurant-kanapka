@@ -2,18 +2,21 @@ import React, { useState } from 'react'
 
 import api from '@api/index'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { setCart } from '@redux-actions/mainPageActions'
+import { setCart } from '@redux-actions/pageActions'
 
 import { DELIVERY_MODE_VALUES } from '@pages/MainPage/RightBlock/Delivery/deliveryModeSwitcherUtils'
 import CircularProgress from '@mui/material/CircularProgress'
 import LoadingButtonCustom from '@components/Overrides/LoadingButtonCustom'
 import { createStyles, makeStyles } from '@mui/styles'
+import { useSnackbar } from 'notistack'
 
 export default function OrderConfirm() {
     const classes = useStyles()
     const dispatch = useAppDispatch()
+    const { enqueueSnackbar } = useSnackbar()
+
     const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false)
-    const cart = useAppSelector((state) => state.mainPage.cart)
+    const cart = useAppSelector((state) => state.page.cart)
 
     const onOrderButtonClick = () => {
         if (cart.dishes.length) {
@@ -36,11 +39,18 @@ export default function OrderConfirm() {
                 })
                 .then(() => {
                     setIsButtonLoading(false)
+                    enqueueSnackbar('Замовлення було успішно створено!', {
+                        variant: 'success',
+                        autoHideDuration: 2000,
+                    })
                     dispatch(setCart({ ...cart, dishes: [] }))
                 })
-                .catch((err) => {
-                    console.log(err)
+                .catch(() => {
                     setIsButtonLoading(false)
+                    enqueueSnackbar('При оформленні замовлення сталася помилка!', {
+                        variant: 'error',
+                        autoHideDuration: 2000,
+                    })
                 })
         }
     }
