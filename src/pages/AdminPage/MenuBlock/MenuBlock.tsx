@@ -106,7 +106,7 @@ export default function MenuBlock() {
         const filename = value?.toString().split('/').pop()
         return filename ? (
             <Box className={classes.fileContainer}>
-                <a href={value?.toString()}>
+                <a href={value?.toString()} target="_blank" rel="noreferrer">
                     <Box className={classes.loadedFile}>
                         <img src={picture} alt="Picture" />
                         <Typography variant="body2">{filename}</Typography>
@@ -178,7 +178,7 @@ export default function MenuBlock() {
                     ) : (
                         <ButtonCustom
                             classes={{ root: classes.cancelButton }}
-                            variant="outlined"
+                            variant="contained"
                             onClick={handleCancelButton}
                         >
                             Відмінити додавання
