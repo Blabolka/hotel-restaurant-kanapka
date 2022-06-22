@@ -60,7 +60,7 @@ const getOrderBillInfoString = (bill: number) => {
     return `₴${bill.toFixed(1)}`
 }
 
-export const getRows = (orders: OrderInfo[]): Data[] => {
+export const getRows = (orders: OrderInfo[], createCheckmarks: (value: boolean) => JSX.Element): Data[] => {
     return orders.map((item) => {
         const { id, dishes, bill, urgent, confirmed, cancelled, done, orderedAt, expectedAt } = item
 
@@ -68,10 +68,10 @@ export const getRows = (orders: OrderInfo[]): Data[] => {
             id,
             dishes: getOrderDishesInfoString(dishes),
             bill: getOrderBillInfoString(bill),
-            urgent: String(urgent),
-            confirmed: String(confirmed),
-            cancelled: String(cancelled),
-            done: String(done),
+            urgent: createCheckmarks(urgent),
+            confirmed: createCheckmarks(confirmed),
+            cancelled: createCheckmarks(cancelled),
+            done: createCheckmarks(done),
             orderedAt: formatDate(orderedAt),
             expectedAt: formatDate(expectedAt),
         }
