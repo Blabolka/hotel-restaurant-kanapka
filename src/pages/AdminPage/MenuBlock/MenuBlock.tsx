@@ -8,6 +8,7 @@ import {
     deleteDishByIdAsync,
     getDishesAsync,
     removeDishInfo,
+    resetPagination,
     setDishInfo,
     updateDishByIdAsync,
 } from '@redux-actions/pageActions'
@@ -44,6 +45,12 @@ export default function MenuBlock() {
 
     useEffect(() => {
         dispatch(getDishesAsync())
+    }, [])
+
+    useEffect(() => {
+        return () => {
+            dispatch(resetPagination())
+        }
     }, [])
 
     const formatTextFieldColumn = (value: DataValueTypes, row: Data, columnName?: string, field?: string) => {

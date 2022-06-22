@@ -10,8 +10,12 @@ import OrdersFiltering from './OrdersFiltering/OrdersFiltering'
 
 import { getColumns, getRows } from './ordersBlockUtils'
 import { FilteringGroup, getDefaultRequestFiltering } from './OrdersFiltering/ordersFilteringUtils'
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import { createStyles, makeStyles } from '@mui/styles'
 
 export default function OrdersBlock() {
+    const classes = useStyles()
     const dispatch = useAppDispatch()
     const orders = useAppSelector((state) => state.orders.orders)
 
@@ -50,12 +54,15 @@ export default function OrdersBlock() {
         }
     }
 
+    const createCheckmarks = (value: boolean): JSX.Element =>
+        value ? <CheckRoundedIcon className={classes.icon} /> : <CloseRoundedIcon className={classes.icon} />
+
     useEffect(() => {
         fetchOrders(1)
     }, [filteringRequestParams])
 
     useEffect(() => {
-        setTableRows(getRows(orders))
+        setTableRows(getRows(orders, createCheckmarks))
     }, [orders])
 
     return (
@@ -76,3 +83,11 @@ export default function OrdersBlock() {
         </Stack>
     )
 }
+
+const useStyles = makeStyles(() =>
+    createStyles({
+        icon: {
+            color: '#8A958D',
+        },
+    }),
+)
