@@ -37,16 +37,17 @@ export default function OrdersFiltering({ onChange }: OrdersFilteringProps) {
 
     return (
         <Stack className={classes.container}>
-            <span className="font-size-22px color-secondary">Фільтрація</span>
+            <span className="font-size-18px color-secondary">Фільтрація</span>
             {filteringGroups.map((group, groupIndex) => {
                 return (
                     <Stack key={groupIndex} gap="8px">
-                        <span className="font-size-18px color-secondary">{group.name}</span>
+                        <span className="font-size-16px color-secondary">{group.name}</span>
                         <FormGroup>
                             {group.values.map((groupValue, groupValueIndex) => {
                                 return (
                                     <FormControlLabel
                                         key={groupValueIndex}
+                                        className={classes.checkboxWrapper}
                                         control={
                                             <CheckboxCustom
                                                 checked={groupValue.checked}
@@ -82,9 +83,13 @@ const useStyles = makeStyles(() =>
             height: '30px',
             width: '30px',
             marginLeft: '6px',
-
             '&.Mui-checked': {
                 color: '#F8AC1B',
+            },
+        },
+        checkboxWrapper: {
+            '& .MuiTypography-root': {
+                fontSize: '14px',
             },
         },
     }),
