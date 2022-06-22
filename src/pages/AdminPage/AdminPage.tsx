@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 
 import { createStyles, makeStyles } from '@mui/styles'
@@ -7,11 +7,14 @@ import { TabItem } from '@components/TabContainer/tabContainerUtils'
 import NavigationPanel from '@components/NavigationPanel/NavigationPanel'
 
 import { getTabItems, getCurrentTabByPath } from '@pages/AdminPage/adminPageUtils'
+import { useAppDispatch } from '@hooks'
+import { resetState } from '@redux-actions/pageActions'
 
 export default function AdminPage() {
     const classes = useStyles()
     const navigate = useNavigate()
     const location = useLocation()
+    const dispatch = useAppDispatch()
 
     const [openedTab, setOpenedTab] = useState<number>(getCurrentTabByPath(location))
 
@@ -37,6 +40,12 @@ export default function AdminPage() {
                 navigate('/')
         }
     }
+
+    useEffect(() => {
+        return () => {
+            dispatch(resetState())
+        }
+    }, [])
 
     return (
         <Box className={classes.root}>
